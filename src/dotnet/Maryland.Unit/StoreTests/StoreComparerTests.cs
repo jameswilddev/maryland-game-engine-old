@@ -96,9 +96,9 @@ namespace Maryland.Unit.StoreTests
 
             var storeDiff = storeComparer.Compare(storeA, storeB);
 
-            referenceStoreComparer.Verify(c => c.Compare(referenceStoreA.Object, referenceStoreB.Object));
+            referenceStoreComparer.Verify(c => c.Compare(referenceStoreA.Object, referenceStoreB.Object), Times.Once());
             referenceStoreComparer.VerifyNoOtherCalls();
-            tagStoreComparer.Verify(c => c.Compare(tagStoreA.Object, tagStoreB.Object));
+            tagStoreComparer.Verify(c => c.Compare(tagStoreA.Object, tagStoreB.Object), Times.Once());
             tagStoreComparer.VerifyNoOtherCalls();
             referenceStoreA.VerifyNoOtherCalls();
             tagStoreA.VerifyNoOtherCalls();
