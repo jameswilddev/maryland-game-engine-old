@@ -50,7 +50,7 @@ namespace Maryland.Patches.Instructions
 
         /// <inheritdoc />
         public IEnumerable<byte> Serialized => Serialize
-            .Byte(10)
+            .Byte(5)
             .Concat(Serialize.Guid(Identifier))
             .Concat(Serialize.ShortString(Value));
     }

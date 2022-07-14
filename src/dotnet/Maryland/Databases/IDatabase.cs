@@ -11,152 +11,87 @@ namespace Maryland.Databases
     public interface IDatabase
     {
         /// <summary>
-        /// Retrieves the state of an entity flag.
+        /// Retrieves the state of a flag.
         /// </summary>
         /// <param name="entity">The identifer of the entity to query.</param>
-        /// <param name="attribute">The identifier of the entity flag to retrieve.</param>
-        /// <returns><see langword="true"/> when the entity flag is set, otherwise, <see langword="false"/>.</returns>
-        bool GetEntityFlag(Guid entity, Guid attribute);
+        /// <param name="attribute">The identifier of the flag to retrieve.</param>
+        /// <returns><see langword="true"/> when the flag is set, otherwise, <see langword="false"/>.</returns>
+        bool GetFlag(Guid entity, Guid attribute);
 
         /// <summary>
-        /// Sets an entity flag.
+        /// Sets a flag.
         /// </summary>
-        /// <remarks>A no-op if the entity flag is currently set.</remarks>
+        /// <remarks>A no-op if the flag is currently set.</remarks>
         /// <param name="entity">The identifer of the entity to change.</param>
-        /// <param name="attribute">The identifier of the entity flag to set.</param>
-        void SetEntityFlag(Guid entity, Guid attribute);
+        /// <param name="attribute">The identifier of the flag to set.</param>
+        void SetFlag(Guid entity, Guid attribute);
 
         /// <summary>
-        /// Clears a entity flag.
+        /// Clears a flag.
         /// </summary>
-        /// <remarks>A no-op if the entity flag is not currently set.</remarks>
+        /// <remarks>A no-op if the flag is not currently set.</remarks>
         /// <param name="entity">The identifer of the entity to change.</param>
-        /// <param name="attribute">The identifier of the entity flag to clear.</param>
-        void ClearEntityFlag(Guid entity, Guid attribute);
+        /// <param name="attribute">The identifier of the flag to clear.</param>
+        void ClearFlag(Guid entity, Guid attribute);
 
         /// <summary>
-        /// Retrieves a entity float.
+        /// Retrieves a float.
         /// </summary>
         /// <param name="entity">The identifer of the entity to query.</param>
-        /// <param name="attribute">The identifier of the entity float to retrieve.</param>
-        /// <returns>The requested entity float.</returns>
-        float GetEntityFloat(Guid entity, Guid attribute);
+        /// <param name="attribute">The identifier of the float to retrieve.</param>
+        /// <returns>The requested float.</returns>
+        float GetFloat(Guid entity, Guid attribute);
 
         /// <summary>
-        /// Changes a entity float.
+        /// Changes a float.
         /// </summary>
         /// <param name="entity">The identifer of the entity to change.</param>
-        /// <param name="attribute">The identifier of the entity float to change.</param>
-        /// <param name="value">The value to change the entity float to.</param>
-        void SetEntityFloat(Guid entity, Guid attribute, float value);
+        /// <param name="attribute">The identifier of the float to change.</param>
+        /// <param name="value">The value to change the float to.</param>
+        void SetFloat(Guid entity, Guid attribute, float value);
 
         /// <summary>
         /// Retrieves a entity reference.
         /// </summary>
         /// <param name="entity">The identifer of the entity to query.</param>
-        /// <param name="attribute">The identifier of the entity reference to retrieve.</param>
-        /// <returns>The requested entity reference.</returns>
-        Guid GetEntityReference(Guid entity, Guid attribute);
+        /// <param name="attribute">The identifier of the reference to retrieve.</param>
+        /// <returns>The requested reference.</returns>
+        Guid GetReference(Guid entity, Guid attribute);
 
         /// <summary>
         /// Retrieves all entities with an attribute referencing a specified entity.
         /// </summary>
-        /// <remarks>This will NOT include references which have never been specified, i.e. GetEntitiesReferencing(anything, Guid.Empty) will ONLY list cases where SetEntityReference has been used to set them to Guid.Empty.</remarks>
+        /// <remarks>This will NOT include references which have never been specified, i.e. GetEntitiesReferencing(anything, Guid.Empty) will ONLY list cases where SetReference has been used to set them to Guid.Empty.</remarks>
         /// <param name="attribute">The identifier of the attribute to search for.</param>
         /// <param name="entity">The referenced entity to search for.</param>
         /// <returns>The identifiers of the entities where the specified <paramref name="attribute"/> references the specified <paramref name="entity"/>.</returns>
-        IEnumerable<Guid> GetEntitiesReferencing(Guid attribute, Guid entity);
+        IEnumerable<Guid> GetReferrers(Guid attribute, Guid entity);
 
         /// <summary>
         /// Changes a entity reference.
         /// </summary>
         /// <param name="entity">The identifer of the entity to change.</param>
-        /// <param name="attribute">The identifier of the entity string to change.</param>
-        /// <param name="value">The value to change the entity reference to.</param>
-        void SetEntityReference(Guid entity, Guid attribute, Guid value);
+        /// <param name="attribute">The identifier of the string to change.</param>
+        /// <param name="value">The value to change the reference to.</param>
+        void SetReference(Guid entity, Guid attribute, Guid value);
 
         /// <summary>
-        /// Retrieves a entity string.
+        /// Retrieves a string.
         /// </summary>
         /// <param name="entity">The identifer of the entity to query.</param>
-        /// <param name="attribute">The identifier of the entity string to retrieve.</param>
-        /// <returns>The requested entity string.</returns>
-        string GetEntityString(Guid entity, Guid attribute);
+        /// <param name="attribute">The identifier of the string to retrieve.</param>
+        /// <returns>The requested string.</returns>
+        string GetString(Guid entity, Guid attribute);
 
         /// <summary>
-        /// Changes a entity string.
+        /// Changes a string.
         /// </summary>
         /// <param name="entity">The identifer of the entity to change.</param>
-        /// <param name="attribute">The identifier of the entity string to change.</param>
-        /// <param name="value">The value to change the entity string to.</param>
+        /// <param name="attribute">The identifier of the string to change.</param>
+        /// <param name="value">The value to change the string to.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> exceeds 65535 bytes in length when encoded as UTF-8.</exception>
-        void SetEntityString(Guid entity, Guid attribute, string value);
-
-        /// <summary>
-        /// Retrieves the state of a global flag.
-        /// </summary>
-        /// <param name="attribute">The identifier of the global flag to retrieve.</param>
-        /// <returns><see langword="true"/> when the global flag is set, otherwise, <see langword="false"/>.</returns>
-        bool GetGlobalFlag(Guid attribute);
-
-        /// <summary>
-        /// Sets a global flag.
-        /// </summary>
-        /// <remarks>A no-op if the global flag is currently set.</remarks>
-        /// <param name="attribute">The identifier of the global flag to set.</param>
-        void SetGlobalFlag(Guid attribute);
-
-        /// <summary>
-        /// Clears a global flag.
-        /// </summary>
-        /// <remarks>A no-op if the global flag is not currently set.</remarks>
-        /// <param name="attribute">The identifier of the global flag to clear.</param>
-        void ClearGlobalFlag(Guid attribute);
-
-        /// <summary>
-        /// Retrieves a global float.
-        /// </summary>
-        /// <param name="identifier">The identifier of the global float to retrieve.</param>
-        /// <returns>The requested global float.</returns>
-        float GetGlobalFloat(Guid identifier);
-
-        /// <summary>
-        /// Changes a global float.
-        /// </summary>
-        /// <param name="identifier">The identifier of the global float to change.</param>
-        /// <param name="value">The value to change the global float to.</param>
-        void SetGlobalFloat(Guid identifier, float value);
-
-        /// <summary>
-        /// Retrieves a global reference.
-        /// </summary>
-        /// <param name="identifier">The identifier of the global reference to retrieve.</param>
-        /// <returns>The requested global reference.</returns>
-        Guid GetGlobalReference(Guid identifier);
-
-        /// <summary>
-        /// Changes a global reference.
-        /// </summary>
-        /// <param name="identifier">The identifier of the global string to change.</param>
-        /// <param name="value">The value to change the global reference to.</param>
-        void SetGlobalReference(Guid identifier, Guid value);
-
-        /// <summary>
-        /// Retrieves a global string.
-        /// </summary>
-        /// <param name="identifier">The identifier of the global string to retrieve.</param>
-        /// <returns>The requested global string.</returns>
-        string GetGlobalString(Guid identifier);
-
-        /// <summary>
-        /// Changes a global string.
-        /// </summary>
-        /// <param name="identifier">The identifier of the global string to change.</param>
-        /// <param name="value">The value to change the global string to.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> exceeds 65535 bytes in length when encoded as UTF-8.</exception>
-        void SetGlobalString(Guid identifier, string value);
+        void SetString(Guid entity, Guid attribute, string value);
 
         /// <summary>
         /// Retrieves a tag by its identifier.

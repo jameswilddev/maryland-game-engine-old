@@ -5,22 +5,25 @@ using Moq;
 namespace Maryland.Unit.Patches.Instructions
 {
     [TestClass]
-    public sealed class SetGlobalStringTests
+    public sealed class SetStringTests
     {
         [TestMethod]
         public void ExposesGivenEmpty()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
 
-            var setGlobalString = new SetGlobalString(attribute, string.Empty);
+            var setString = new SetString(entity, attribute, string.Empty);
 
-            Assert.AreEqual(attribute, setGlobalString.Attribute);
-            Assert.AreEqual(string.Empty, setGlobalString.Value);
+            Assert.AreEqual(entity, setString.Entity);
+            Assert.AreEqual(attribute, setString.Attribute);
+            Assert.AreEqual(string.Empty, setString.Value);
         }
 
         [TestMethod]
         public void ExposesGivenDataUnderLengthLimit()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
             var value = string.Empty;
             for (var i = 0; i < 16382; i++)
@@ -29,15 +32,17 @@ namespace Maryland.Unit.Patches.Instructions
             }
             value += "あ§a";
 
-            var setGlobalString = new SetGlobalString(attribute, value);
+            var setString = new SetString(entity, attribute, value);
 
-            Assert.AreEqual(attribute, setGlobalString.Attribute);
-            Assert.AreEqual(value, setGlobalString.Value);
+            Assert.AreEqual(entity, setString.Entity);
+            Assert.AreEqual(attribute, setString.Attribute);
+            Assert.AreEqual(value, setString.Value);
         }
 
         [TestMethod]
         public void ExposesGivenDataAtLengthLimit()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
             var value = string.Empty;
             for (var i = 0; i < 16382; i++)
@@ -46,15 +51,17 @@ namespace Maryland.Unit.Patches.Instructions
             }
             value += "あ§aa";
 
-            var setGlobalString = new SetGlobalString(attribute, value);
+            var setString = new SetString(entity, attribute, value);
 
-            Assert.AreEqual(attribute, setGlobalString.Attribute);
-            Assert.AreEqual(value, setGlobalString.Value);
+            Assert.AreEqual(entity, setString.Entity);
+            Assert.AreEqual(attribute, setString.Attribute);
+            Assert.AreEqual(value, setString.Value);
         }
 
         [TestMethod]
-        public void ThrowsExceptionWhenLengthLimitExceededByOneByte()
+        public void ThrowsExceptionWhenLengthLimitExceededByOneBytes()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
             var value = string.Empty;
             for (var i = 0; i < 16382; i++)
@@ -65,7 +72,7 @@ namespace Maryland.Unit.Patches.Instructions
 
             try
             {
-                _ = new SetGlobalString(attribute, value);
+                _ = new SetString(entity, attribute, value);
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -79,6 +86,7 @@ namespace Maryland.Unit.Patches.Instructions
         [TestMethod]
         public void ThrowsExceptionWhenLengthLimitExceededByTwoBytes()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
             var value = string.Empty;
             for (var i = 0; i < 16382; i++)
@@ -89,7 +97,7 @@ namespace Maryland.Unit.Patches.Instructions
 
             try
             {
-                _ = new SetGlobalString(attribute, value);
+                _ = new SetString(entity, attribute, value);
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -103,12 +111,13 @@ namespace Maryland.Unit.Patches.Instructions
         [TestMethod]
         public void ThrowsExceptionWhenValueNull()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
 
             try
             {
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-                _ = new SetGlobalString(attribute, null);
+                _ = new SetString(entity, attribute, null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 Assert.Fail();
             }
@@ -123,30 +132,33 @@ namespace Maryland.Unit.Patches.Instructions
         [TestMethod]
         public void AppliesToDatabases()
         {
+            var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
             var value = "Test Value";
-            var setGlobalReference = new SetGlobalString(attribute, value);
+            var setEntityReference = new SetString(entity, attribute, value);
             var database = new Mock<IDatabase>();
 
-            setGlobalReference.ApplyTo(database.Object);
+            setEntityReference.ApplyTo(database.Object);
 
-            database.Verify(d => d.SetGlobalString(attribute, value), Times.Once);
+            database.Verify(d => d.SetString(entity, attribute, value), Times.Once);
             database.VerifyNoOtherCalls();
         }
 
         [TestMethod]
         public void Serializes()
         {
+            var entity = new Guid("eb28a90f-86c4-4f56-b8f9-135156e9d8f9");
             var attribute = new Guid("9ca7bb9e-506b-4cfe-bb0b-0e8fbb8a2da6");
             var value = "Test §あ𩸽 Value";
-            var setGlobalString = new SetGlobalString(attribute, value);
+            var setString = new SetString(entity, attribute, value);
 
-            var bytes = setGlobalString.Serialized;
+            var bytes = setString.Serialized;
 
             CollectionAssert.AreEqual(
                 new byte[]
                 {
                     1,
+                    0xeb, 0x28, 0xa9, 0x0f, 0x86, 0xc4, 0x4f, 0x56, 0xb8, 0xf9, 0x13, 0x51, 0x56, 0xe9, 0xd8, 0xf9,
                     0x9c, 0xa7, 0xbb, 0x9e, 0x50, 0x6b, 0x4c, 0xfe, 0xbb, 0x0b, 0x0e, 0x8f, 0xbb, 0x8a, 0x2d, 0xa6,
                     20, 0,
                     0x54, 0x65, 0x73, 0x74, 0x20, 0xc2, 0xa7, 0xe3, 0x81, 0x82, 0xf0, 0xa9, 0xb8, 0xbd, 0x20, 0x56, 0x61, 0x6c, 0x75, 0x65,

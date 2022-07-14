@@ -3,9 +3,9 @@
 namespace Maryland.Patches.Instructions
 {
     /// <summary>
-    /// An instruction to set an entity flag within a patch.
+    /// An instruction to set a flag within a patch.
     /// </summary>
-    public sealed class SetEntityFlag : IInstruction
+    public sealed class SetFlag : IInstruction
     {
         /// <summary>
         /// The identifier of the entity which holds the flag.
@@ -18,11 +18,11 @@ namespace Maryland.Patches.Instructions
         public readonly Guid Attribute;
 
         /// <summary>
-        /// Creates an instruction to set an entity flag within a patch.
+        /// Creates an instruction to set a flag within a patch.
         /// </summary>
         /// <param name="entity">The identifier of the entity which holds the flag.</param>
         /// <param name="attribute">The identifier of the attribute to set.</param>
-        public SetEntityFlag(Guid entity, Guid attribute)
+        public SetFlag(Guid entity, Guid attribute)
         {
             Entity = entity;
             Attribute = attribute;
@@ -31,12 +31,12 @@ namespace Maryland.Patches.Instructions
         /// <inheritdoc />
         public void ApplyTo(IDatabase database)
         {
-            database.SetEntityFlag(Entity, Attribute);
+            database.SetFlag(Entity, Attribute);
         }
 
         /// <inheritdoc />
         public IEnumerable<byte> Serialized => Serialize
-            .Byte(8)
+            .Byte(3)
             .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute));
     }

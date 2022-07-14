@@ -3,10 +3,15 @@
 namespace Maryland.Patches.Instructions
 {
     /// <summary>
-    /// An instruction to set a global reference within a patch.
+    /// An instruction to set a reference within a patch.
     /// </summary>
-    public sealed class SetGlobalReference : IInstruction
+    public sealed class SetReference : IInstruction
     {
+        /// <summary>
+        /// The identifier of the entity which holds the reference.
+        /// </summary>
+        public readonly Guid Entity;
+
         /// <summary>
         /// The identifier of the attribute to set.
         /// </summary>
@@ -18,12 +23,14 @@ namespace Maryland.Patches.Instructions
         public readonly Guid Value;
 
         /// <summary>
-        /// Creates an instruction to set a global reference within a patch.
+        /// Creates an instruction to set a reference within a patch.
         /// </summary>
+        /// <param name="entity">The identifier of the entity which holds the reference.</param>
         /// <param name="attribute">The identifier of the attribute to set.</param>
         /// <param name="value">The identifier of the referenced entity.</param>
-        public SetGlobalReference(Guid attribute, Guid value)
+        public SetReference(Guid entity, Guid attribute, Guid value)
         {
+            Entity = entity;
             Attribute = attribute;
             Value = value;
         }
@@ -31,12 +38,13 @@ namespace Maryland.Patches.Instructions
         /// <inheritdoc />
         public void ApplyTo(IDatabase database)
         {
-            database.SetGlobalReference(Attribute, Value);
+            database.SetReference(Entity, Attribute, Value);
         }
 
         /// <inheritdoc />
         public IEnumerable<byte> Serialized => Serialize
             .Byte(0)
+            .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute))
             .Concat(Serialize.Guid(Value));
     }

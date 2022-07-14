@@ -12,10 +12,10 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var identifier = Guid.NewGuid();
 
-            var setGlobalString = new SetTag(identifier, string.Empty);
+            var setTag = new SetTag(identifier, string.Empty);
 
-            Assert.AreEqual(identifier, setGlobalString.Identifier);
-            Assert.AreEqual(string.Empty, setGlobalString.Value);
+            Assert.AreEqual(identifier, setTag.Identifier);
+            Assert.AreEqual(string.Empty, setTag.Value);
         }
 
         [TestMethod]
@@ -29,10 +29,10 @@ namespace Maryland.Unit.Patches.Instructions
             }
             value += "あ§a";
 
-            var setGlobalString = new SetTag(identifier, value);
+            var setTag = new SetTag(identifier, value);
 
-            Assert.AreEqual(identifier, setGlobalString.Identifier);
-            Assert.AreEqual(value, setGlobalString.Value);
+            Assert.AreEqual(identifier, setTag.Identifier);
+            Assert.AreEqual(value, setTag.Value);
         }
 
         [TestMethod]
@@ -46,10 +46,10 @@ namespace Maryland.Unit.Patches.Instructions
             }
             value += "あ§aa";
 
-            var setGlobalString = new SetTag(identifier, value);
+            var setTag = new SetTag(identifier, value);
 
-            Assert.AreEqual(identifier, setGlobalString.Identifier);
-            Assert.AreEqual(value, setGlobalString.Value);
+            Assert.AreEqual(identifier, setTag.Identifier);
+            Assert.AreEqual(value, setTag.Value);
         }
 
         [TestMethod]
@@ -125,10 +125,10 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var identifier = Guid.NewGuid();
             var value = "Test Value";
-            var setGlobalReference = new SetTag(identifier, value);
+            var setEntityReference = new SetTag(identifier, value);
             var database = new Mock<IDatabase>();
 
-            setGlobalReference.ApplyTo(database.Object);
+            setEntityReference.ApplyTo(database.Object);
 
             database.Verify(d => d.SetTag(identifier, value), Times.Once);
             database.VerifyNoOtherCalls();
@@ -146,7 +146,7 @@ namespace Maryland.Unit.Patches.Instructions
             CollectionAssert.AreEqual(
                 new byte[]
                 {
-                    10,
+                    5,
                     0x9c, 0xa7, 0xbb, 0x9e, 0x50, 0x6b, 0x4c, 0xfe, 0xbb, 0x0b, 0x0e, 0x8f, 0xbb, 0x8a, 0x2d, 0xa6,
                     20,
                     0x54, 0x65, 0x73, 0x74, 0x20, 0xc2, 0xa7, 0xe3, 0x81, 0x82, 0xf0, 0xa9, 0xb8, 0xbd, 0x20, 0x56, 0x61, 0x6c, 0x75, 0x65,

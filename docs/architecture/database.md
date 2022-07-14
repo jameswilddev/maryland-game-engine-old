@@ -4,41 +4,6 @@
 
 An identifier is a 128-bit value which identifies an entity or attribute, randomly generated on the creation of new entities and attributes.  Identifiers are analogous to UUIDs or GUIDs.
 
-## Global References
-
-A global reference includes:
-
-- The identifier of the attribute.
-- The identifier of the referenced entity (the value).
-
-All global references' values default to an all-zero identifier.
-
-## Global Strings
-
-A global string includes:
-
-- The identifier of the attribute.
-- Up to 65535 bytes of UTF-8 encoded text (the value).
-
-All global strings' values default to empty strings.
-
-## Global Floats
-
-A global float includes:
-
-- The identifier of the attribute.
-- A 32-bit IEEE float (the value, including support for NaN and positive/negative infinity).
-
-All global floats' values default to 0 when not set.
-
-## Global Flags
-
-A global flag includes:
-
-- The identifier of the attribute.
-
-All global flags default to unset.
-
 ## Entity References
 
 An entity reference includes:

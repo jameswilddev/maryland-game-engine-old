@@ -4,9 +4,9 @@ using System.Text;
 namespace Maryland.Patches.Instructions
 {
     /// <summary>
-    /// An instruction to set an entity float within a patch.
+    /// An instruction to set a float within a patch.
     /// </summary>
-    public sealed class SetEntityFloat : IInstruction
+    public sealed class SetFloat : IInstruction
     {
         /// <summary>
         /// The identifier of the entity which holds the float.
@@ -24,12 +24,12 @@ namespace Maryland.Patches.Instructions
         public readonly float Value;
 
         /// <summary>
-        /// Creates an instruction to set an entity float within a patch.
+        /// Creates an instruction to set a float within a patch.
         /// </summary>
         /// <param name="entity">The identifier of the entity which holds the float.</param>
         /// <param name="attribute">The identifier of the attribute to set.</param>
         /// <param name="value">The content of the float to set.</param>
-        public SetEntityFloat(Guid entity, Guid attribute, float value)
+        public SetFloat(Guid entity, Guid attribute, float value)
         {
             Entity = entity;
             Attribute = attribute;
@@ -39,12 +39,12 @@ namespace Maryland.Patches.Instructions
         /// <inheritdoc />
         public void ApplyTo(IDatabase database)
         {
-            database.SetEntityFloat(Entity, Attribute, Value);
+            database.SetFloat(Entity, Attribute, Value);
         }
 
         /// <inheritdoc />
         public IEnumerable<byte> Serialized => Serialize
-            .Byte(7)
+            .Byte(2)
             .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute))
             .Concat(Serialize.Float(Value));
