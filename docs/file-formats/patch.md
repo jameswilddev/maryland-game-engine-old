@@ -16,7 +16,7 @@ Immediately followed by:
 Immediately followed by:
 
 - 16 bytes representing the identifier of the attribute.
-- A little-endian unsigned 16-bit integer specifying the length of the string in bytes.
+- A little-endian unsigned 16-bit integer specifying the length of the string in UTF-8 encoded bytes.
 - The bytes of the string, UTF-8 encoded.
 
 ## 2 - Set Global Float
@@ -52,7 +52,7 @@ Immediately followed by:
 
 - 16 bytes representing the identifier of the entity holding the string.
 - 16 bytes representing the identifier of the attribute.
-- A little-endian unsigned 16-bit integer specifying the length of the string in bytes.
+- A little-endian unsigned 16-bit integer specifying the length of the string in UTF-8 encoded bytes.
 - The bytes of the string, UTF-8 encoded.
 
 ## 7 - Set Entity Float
@@ -76,3 +76,11 @@ Immediately followed by:
 
 - 16 bytes representing the identifier of the entity holding the flag.
 - 16 bytes representing the identifier of the attribute.
+
+## 10 - Set Tag
+
+Immediately followed by:
+
+- 16 bytes representing the identifier of the tag.
+- An unsigned byte specifying the length of the string in UTF-8 encoded bytes.
+- The bytes of the string, UTF-8 encoded.
