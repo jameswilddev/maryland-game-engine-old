@@ -59,7 +59,7 @@ namespace Maryland.Unit.Patches.Instructions
         }
 
         [TestMethod]
-        public void ThrowsExceptionWhenLengthLimitExceededByOneBytes()
+        public void ThrowsExceptionWhenLengthLimitExceededByOneByte()
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
