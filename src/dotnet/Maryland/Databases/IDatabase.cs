@@ -113,5 +113,13 @@ namespace Maryland.Databases
         /// This <see cref="IDatabase"/>, converted to a sequence of <see cref="IInstruction"/>s as would be found in a patch file.
         /// </summary>
         IEnumerable<IInstruction> Patch { get; }
+
+        /// <summary>
+        /// Generates a patch from <see langword="this"/> <see cref="IDatabase"/> and applies it directly to another <see cref="IDatabase"/>.
+        /// </summary>
+        /// <param name="to">The <see cref="IDatabase"/> to apply the changes to.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="to"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="to"/> is <see langword="this"/>.</exception>
+        void Apply(IDatabase to);
     }
 }

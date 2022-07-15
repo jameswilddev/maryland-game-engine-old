@@ -197,5 +197,39 @@ namespace Maryland.Databases
                 Tags[identifier] = value;
             }
         }
+
+        /// <inheritdoc />
+        public void Apply(IDatabase to)
+        {
+            foreach (var flag in SetFlags)
+            {
+                to.SetFlag(flag.Entity, flag.Attribute);
+            }
+
+            foreach (var flag in ClearFlags)
+            {
+                to.ClearFlag(flag.Entity, flag.Attribute);
+            }
+
+            foreach (var kv in Floats)
+            {
+                to.SetFloat(kv.Key.Entity, kv.Key.Attribute, kv.Value);
+            }
+
+            foreach (var kv in ReferenceForward)
+            {
+                to.SetReference(kv.Key.Entity, kv.Key.Attribute, kv.Value);
+            }
+
+            foreach (var kv in Strings)
+            {
+                to.SetString(kv.Key.Entity, kv.Key.Attribute, kv.Value);
+            }
+
+            foreach (var kv in Tags)
+            {
+                to.SetTag(kv.Key, kv.Value);
+            }
+        }
     }
 }

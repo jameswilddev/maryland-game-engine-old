@@ -1,5 +1,6 @@
 ﻿using Maryland.Databases;
 using Maryland.Patches.Instructions;
+using Moq;
 
 namespace Maryland.Unit.Databases
 {
@@ -228,6 +229,47 @@ namespace Maryland.Unit.Databases
                 },
                 database.Patch.ToArray()
             );
+            var to = new Mock<IDatabase>();
+            database.Apply(to.Object);
+            to.Verify(d => d.SetFlag(setFlagEntity, sharedAttribute), Times.Once());
+            to.Verify(d => d.SetFlag(doubleSetFlagEntity, sharedAttribute), Times.Once());
+            to.Verify(d => d.ClearFlag(clearFlagEntity, sharedAttribute), Times.Once());
+            to.Verify(d => d.ClearFlag(doubleClearFlagEntity, sharedAttribute), Times.Once());
+            to.Verify(d => d.ClearFlag(setThenClearFlagEntity, sharedAttribute), Times.Once());
+            to.Verify(d => d.SetFlag(clearThenSetFlagEntity, sharedAttribute), Times.Once());
+            to.Verify(d => d.SetFlag(sharedEntity, setFlagAttribute), Times.Once());
+            to.Verify(d => d.SetFlag(sharedEntity, doubleSetFlagAttribute), Times.Once());
+            to.Verify(d => d.ClearFlag(sharedEntity, clearFlagAttribute), Times.Once());
+            to.Verify(d => d.ClearFlag(sharedEntity, doubleClearFlagAttribute), Times.Once());
+            to.Verify(d => d.ClearFlag(sharedEntity, setThenClearFlagAttribute), Times.Once());
+            to.Verify(d => d.SetFlag(sharedEntity, clearThenSetFlagAttribute), Times.Once());
+            to.Verify(d => d.SetFloat(setFloatEntity, sharedAttribute, setFloatEntityValue), Times.Once());
+            to.Verify(d => d.SetFloat(doubleSetFloatEntity, sharedAttribute, doubleSetFloatEntityValue), Times.Once());
+            to.Verify(d => d.SetFloat(sharedEntity, setFloatAttribute, setFloatAttributeValue), Times.Once());
+            to.Verify(d => d.SetFloat(sharedEntity, doubleSetFloatAttribute, doubleSetFloatAttributeValue), Times.Once());
+            to.Verify(d => d.SetString(setStringEntity, sharedAttribute, setStringEntityValue), Times.Once());
+            to.Verify(d => d.SetString(doubleSetStringEntity, sharedAttribute, doubleSetStringEntityValue), Times.Once());
+            to.Verify(d => d.SetString(sharedEntity, setStringAttribute, setStringAttributeValue), Times.Once());
+            to.Verify(d => d.SetString(sharedEntity, doubleSetStringAttribute, doubleSetStringAttributeValue), Times.Once());
+            to.Verify(d => d.SetTag(setTagIdentifier, setTagValue), Times.Once());
+            to.Verify(d => d.SetTag(doubleSetTagIdentifier, doubleSetTagValue), Times.Once());
+            to.Verify(d => d.SetReference(setReferenceEntity, sharedAttribute, setReferenceEntityValue), Times.Once());
+            to.Verify(d => d.SetReference(doubleSetReferenceEntity, sharedAttribute, doubleSetReferenceEntityValue), Times.Once());
+            to.Verify(d => d.SetReference(sharedEntity, setReferenceAttribute, setReferenceAttributeValue), Times.Once());
+            to.Verify(d => d.SetReference(sharedEntity, doubleSetReferenceAttribute, doubleSetReferenceAttributeValue), Times.Once());
+            to.Verify(d => d.SetReference(setThreeReferrerA, sharedAttribute, setThreeEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeReferrerB, sharedAttribute, setThreeEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeReferrerC, sharedAttribute, setThreeEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeOneReferrerA, sharedAttribute, setThreeChangeOneEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeOneReferrerB, sharedAttribute, sharedEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeOneReferrerC, sharedAttribute, setThreeChangeOneEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeTwoReferrerA, sharedAttribute, sharedEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeTwoReferrerB, sharedAttribute, sharedEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeTwoReferrerC, sharedAttribute, setThreeChangeTwoEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeThreeReferrerA, sharedAttribute, sharedEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeThreeReferrerB, sharedAttribute, sharedEntity), Times.Once());
+            to.Verify(d => d.SetReference(setThreeChangeThreeReferrerC, sharedAttribute, sharedEntity), Times.Once());
+            to.VerifyNoOtherCalls();
         }
 
         [TestMethod]
