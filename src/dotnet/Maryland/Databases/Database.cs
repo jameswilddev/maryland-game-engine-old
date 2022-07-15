@@ -231,5 +231,17 @@ namespace Maryland.Databases
                 to.SetTag(kv.Key, kv.Value);
             }
         }
+
+        /// <inheritdoc />
+        public void Clear()
+        {
+            SetFlags.Clear();
+            ClearFlags.Clear();
+            Floats.Clear();
+            ReferenceForward.Clear();
+            ReferenceInverse.Clear();
+            Strings.Clear();
+            Tags.Clear();
+        }
     }
 }

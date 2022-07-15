@@ -121,5 +121,10 @@ namespace Maryland.Databases
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="to"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="to"/> is <see langword="this"/>.</exception>
         void Apply(IDatabase to);
+
+        /// <summary>
+        /// Deletes all records from <see langword="this"/> <see cref="IDatabase"/>.
+        /// </summary>
+        void Clear();
     }
 }
