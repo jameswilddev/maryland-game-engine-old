@@ -13,5 +13,101 @@
         {
             return $"Test {Guid.NewGuid()} String";
         }
+
+        internal static string String254BytesInUTF8()
+        {
+            var value = string.Empty;
+            
+            for (var i = 0; i < 62; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§a";
+        }
+
+        internal static string String255BytesInUTF8()
+        {
+            var value = string.Empty;
+
+            for (var i = 0; i < 62; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§aa";
+        }
+
+        internal static string String256BytesInUTF8()
+        {
+            var value = string.Empty;
+
+            for (var i = 0; i < 62; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§aaa";
+        }
+
+        internal static string String257BytesInUTF8()
+        {
+            var value = string.Empty;
+
+            for (var i = 0; i < 62; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§aaaa";
+        }
+
+        internal static string String65534BytesInUTF8()
+        {
+            var value = string.Empty;
+
+            for (var i = 0; i < 16382; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§a";
+        }
+
+        internal static string String65535BytesInUTF8()
+        {
+            var value = string.Empty;
+            
+            for (var i = 0; i < 16382; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§aa";
+        }
+
+        internal static string String65536BytesInUTF8()
+        {
+            var value = string.Empty;
+            
+            for (var i = 0; i < 16382; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§aaa";
+        }
+
+        internal static string String65537BytesInUTF8()
+        {
+            var value = string.Empty;
+
+            for (var i = 0; i < 16382; i++)
+            {
+                value += "𩸽";
+            }
+
+            return $"{value}あ§aaaa";
+        }
     }
 }

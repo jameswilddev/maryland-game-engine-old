@@ -22,12 +22,7 @@ namespace Maryland.Unit.Patches.Instructions
         public void ExposesGivenDataUnderLengthLimit()
         {
             var identifier = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 62; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§a";
+            var value = Generate.String254BytesInUTF8();
 
             var setTag = new SetTag(identifier, value);
 
@@ -39,12 +34,7 @@ namespace Maryland.Unit.Patches.Instructions
         public void ExposesGivenDataAtLengthLimit()
         {
             var identifier = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 62; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§aa";
+            var value = Generate.String255BytesInUTF8();
 
             var setTag = new SetTag(identifier, value);
 
@@ -56,12 +46,7 @@ namespace Maryland.Unit.Patches.Instructions
         public void ThrowsExceptionWhenLengthLimitExceededByOneByte()
         {
             var identifier = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 62; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§aaa";
+            var value = Generate.String256BytesInUTF8();
 
             try
             {
@@ -80,12 +65,7 @@ namespace Maryland.Unit.Patches.Instructions
         public void ThrowsExceptionWhenLengthLimitExceededByTwoBytes()
         {
             var identifier = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 62; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§aaaa";
+            var value = Generate.String257BytesInUTF8();
 
             try
             {

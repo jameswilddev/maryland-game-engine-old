@@ -25,12 +25,7 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 16382; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§a";
+            var value = Generate.String65534BytesInUTF8();
 
             var setString = new SetString(entity, attribute, value);
 
@@ -44,12 +39,7 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 16382; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§aa";
+            var value = Generate.String65535BytesInUTF8();
 
             var setString = new SetString(entity, attribute, value);
 
@@ -63,12 +53,7 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 16382; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§aaa";
+            var value = Generate.String65536BytesInUTF8();
 
             try
             {
@@ -88,12 +73,7 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var value = string.Empty;
-            for (var i = 0; i < 16382; i++)
-            {
-                value += "𩸽";
-            }
-            value += "あ§aaaa";
+            var value = Generate.String65537BytesInUTF8();
 
             try
             {
