@@ -12,9 +12,7 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var bytes = new byte[4];
-            Random.Shared.NextBytes(bytes);
-            var value = BitConverter.ToSingle(bytes);
+            var value = Generate.Float();
 
             var setFloat = new SetFloat(entity, attribute, value);
 
@@ -28,9 +26,7 @@ namespace Maryland.Unit.Patches.Instructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var bytes = new byte[4];
-            Random.Shared.NextBytes(bytes);
-            var value = BitConverter.ToSingle(bytes);
+            var value = Generate.Float();
             var setFloat = new SetFloat(entity, attribute, value);
             var database = new Mock<IDatabase>();
 
