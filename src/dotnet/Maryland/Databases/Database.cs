@@ -20,13 +20,13 @@ namespace Maryland.Databases
       }
     }
 
-    private readonly HashSet<EntityAttributePair> SetFlags = new HashSet<EntityAttributePair>();
-    private readonly HashSet<EntityAttributePair> ClearFlags = new HashSet<EntityAttributePair>();
-    private readonly Dictionary<EntityAttributePair, float> Floats = new Dictionary<EntityAttributePair, float>();
-    private readonly Dictionary<EntityAttributePair, Guid> ReferenceForward = new Dictionary<EntityAttributePair, Guid>();
-    private readonly Dictionary<EntityAttributePair, HashSet<Guid>> ReferenceInverse = new Dictionary<EntityAttributePair, HashSet<Guid>>();
-    private readonly Dictionary<EntityAttributePair, string> Strings = new Dictionary<EntityAttributePair, string>();
-    private readonly Dictionary<Guid, string> Tags = new Dictionary<Guid, string>();
+    private readonly HashSet<EntityAttributePair> SetFlags = new();
+    private readonly HashSet<EntityAttributePair> ClearFlags = new();
+    private readonly Dictionary<EntityAttributePair, float> Floats = new();
+    private readonly Dictionary<EntityAttributePair, Guid> ReferenceForward = new();
+    private readonly Dictionary<EntityAttributePair, HashSet<Guid>> ReferenceInverse = new();
+    private readonly Dictionary<EntityAttributePair, string> Strings = new();
+    private readonly Dictionary<Guid, string> Tags = new();
 
     /// <inheritdoc />
     public IEnumerable<IInstruction> Patch => SetFlags
