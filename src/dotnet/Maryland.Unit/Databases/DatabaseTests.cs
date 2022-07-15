@@ -1,5 +1,5 @@
 ﻿using Maryland.Databases;
-using Maryland.Patches.Instructions;
+using Maryland.PatchInstructions;
 using Moq;
 
 namespace Maryland.Unit.Databases

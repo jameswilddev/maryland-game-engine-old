@@ -1,6 +1,6 @@
 ﻿using Maryland.Databases;
 
-namespace Maryland.Patches.Instructions
+namespace Maryland.PatchInstructions
 {
     /// <summary>
     /// An instruction within a patch.

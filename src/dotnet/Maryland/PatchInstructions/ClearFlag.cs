@@ -1,11 +1,11 @@
 ﻿using Maryland.Databases;
 
-namespace Maryland.Patches.Instructions
+namespace Maryland.PatchInstructions
 {
     /// <summary>
-    /// An instruction to set a flag within a patch.
+    /// An instruction to clear a flag within a patch.
     /// </summary>
-    public sealed class SetFlag : IInstruction
+    public sealed class ClearFlag : IInstruction
     {
         /// <summary>
         /// The identifier of the entity which holds the flag.
@@ -13,16 +13,16 @@ namespace Maryland.Patches.Instructions
         public readonly Guid Entity;
 
         /// <summary>
-        /// The identifier of the attribute to set.
+        /// The identifier of the attribute to clear.
         /// </summary>
         public readonly Guid Attribute;
 
         /// <summary>
-        /// Creates an instruction to set a flag within a patch.
+        /// Creates an instruction to clear a flag within a patch.
         /// </summary>
         /// <param name="entity">The identifier of the entity which holds the flag.</param>
-        /// <param name="attribute">The identifier of the attribute to set.</param>
-        public SetFlag(Guid entity, Guid attribute)
+        /// <param name="attribute">The identifier of the attribute to clear.</param>
+        public ClearFlag(Guid entity, Guid attribute)
         {
             Entity = entity;
             Attribute = attribute;
@@ -31,21 +31,21 @@ namespace Maryland.Patches.Instructions
         /// <inheritdoc />
         public void ApplyTo(IDatabase database)
         {
-            database.SetFlag(Entity, Attribute);
+            database.ClearFlag(Entity, Attribute);
         }
 
         /// <inheritdoc />
         public IEnumerable<byte> Serialized => Serialize
-            .Byte(3)
+            .Byte(4)
             .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute));
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is SetFlag setFlag)
+            if (obj is ClearFlag clearFlag)
             {
-                return setFlag.Entity == Entity && setFlag.Attribute == Attribute;
+                return clearFlag.Entity == Entity && clearFlag.Attribute == Attribute;
             }
             else
             {

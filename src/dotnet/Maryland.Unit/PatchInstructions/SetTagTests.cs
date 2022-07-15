@@ -1,8 +1,8 @@
 ﻿using Maryland.Databases;
-using Maryland.Patches.Instructions;
+using Maryland.PatchInstructions;
 using Moq;
 
-namespace Maryland.Unit.Patches.Instructions
+namespace Maryland.Unit.PatchInstructions
 {
     [TestClass]
     public sealed class SetTagTests

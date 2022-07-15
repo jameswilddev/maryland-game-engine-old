@@ -1,7 +1,7 @@
 ﻿using Maryland.Databases;
 using System.Text;
 
-namespace Maryland.Patches.Instructions
+namespace Maryland.PatchInstructions
 {
     /// <summary>
     /// An instruction to set a string within a patch.

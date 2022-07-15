@@ -1,4 +1,4 @@
-﻿using Maryland.Patches.Instructions;
+﻿using Maryland.PatchInstructions;
 
 namespace Maryland.Databases
 {
