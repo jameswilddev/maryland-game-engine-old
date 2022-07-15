@@ -57,5 +57,51 @@ namespace Maryland.Unit.Patches.Instructions
                 bytes.ToArray()
             );
         }
+
+        [TestMethod]
+        public void Equal()
+        {
+            var entity = Guid.NewGuid();
+            var attribute = Guid.NewGuid();
+            var value = Generate.Float();
+            var a = new SetFloat(entity, attribute, value);
+            var b = new SetFloat(entity, attribute, value);
+
+            Assert.AreEqual(a, b);
+            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+        }
+
+        [TestMethod]
+        public void InequalEntity()
+        {
+            var attribute = Guid.NewGuid();
+            var value = Generate.Float();
+            var a = new SetFloat(Guid.NewGuid(), attribute, value);
+            var b = new SetFloat(Guid.NewGuid(), attribute, value);
+
+            Assert.AreNotEqual(a, b);
+        }
+
+        [TestMethod]
+        public void InequalAttribute()
+        {
+            var entity = Guid.NewGuid();
+            var value = Generate.Float();
+            var a = new SetFloat(entity, Guid.NewGuid(), value);
+            var b = new SetFloat(entity, Guid.NewGuid(), value);
+
+            Assert.AreNotEqual(a, b);
+        }
+
+        [TestMethod]
+        public void InequalValue()
+        {
+            var entity = Guid.NewGuid();
+            var attribute = Guid.NewGuid();
+            var a = new SetFloat(entity, attribute, Generate.Float());
+            var b = new SetFloat(entity, attribute, Generate.Float());
+
+            Assert.AreNotEqual(a, b);
+        }
     }
 }

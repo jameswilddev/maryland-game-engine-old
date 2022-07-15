@@ -39,5 +39,24 @@ namespace Maryland.Patches.Instructions
             .Byte(3)
             .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute));
+
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+        {
+            if (obj is SetFlag setFlag)
+            {
+                return setFlag.Entity == Entity && setFlag.Attribute == Attribute;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Entity, Attribute);
+        }
     }
 }

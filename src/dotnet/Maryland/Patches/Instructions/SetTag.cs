@@ -53,5 +53,24 @@ namespace Maryland.Patches.Instructions
             .Byte(5)
             .Concat(Serialize.Guid(Identifier))
             .Concat(Serialize.ShortString(Value));
+
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+        {
+            if (obj is SetTag setTag)
+            {
+                return setTag.Identifier == Identifier && setTag.Value == Value;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Identifier, Value);
+        }
     }
 }

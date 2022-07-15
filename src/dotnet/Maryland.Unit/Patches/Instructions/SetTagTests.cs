@@ -154,5 +154,37 @@ namespace Maryland.Unit.Patches.Instructions
                 bytes.ToArray()
             );
         }
+
+        [TestMethod]
+        public void Equal()
+        {
+            var identifier = Guid.NewGuid();
+            var value = Generate.String();
+            var a = new SetTag(identifier, value);
+            var b = new SetTag(identifier, value);
+
+            Assert.AreEqual(a, b);
+            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+        }
+
+        [TestMethod]
+        public void InequalIdentifier()
+        {
+            var value = Generate.String();
+            var a = new SetTag(Guid.NewGuid(), value);
+            var b = new SetTag(Guid.NewGuid(), value);
+
+            Assert.AreNotEqual(a, b);
+        }
+
+        [TestMethod]
+        public void InequalValue()
+        {
+            var identifier = Guid.NewGuid();
+            var a = new SetTag(identifier, Generate.String());
+            var b = new SetTag(identifier, Generate.String());
+
+            Assert.AreNotEqual(a, b);
+        }
     }
 }
