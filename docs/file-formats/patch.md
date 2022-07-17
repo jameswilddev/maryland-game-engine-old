@@ -48,7 +48,7 @@ Immediately followed by:
 Immediately followed by:
 
 - 16 bytes representing the identifier of the tag.
-- An unsigned byte specifying the length of the string in UTF-8 encoded bytes.
+- An unsigned byte specifying the length of the string in UTF-8 encoded bytes (at least 1).
 - The bytes of the string, UTF-8 encoded.
 
 ## 6 - Set Color

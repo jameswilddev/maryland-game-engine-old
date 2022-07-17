@@ -1,4 +1,4 @@
-﻿using Maryland.Databases;
+using Maryland.Databases;
 using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 using Moq;
@@ -463,7 +463,26 @@ namespace Maryland.Unit.Databases
             catch (ArgumentNullException exception)
             {
                 Assert.IsNull(exception.InnerException);
-                Assert.AreEqual("Value cannot be null. (Parameter 'value')", exception.Message);
+                Assert.AreEqual("Value cannot be null or empty. (Parameter 'value')", exception.Message);
+                Assert.AreEqual("value", exception.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void SetTagThrowsExceptionWhenValueEmpty()
+        {
+            var database = new Database();
+            var identifier = Guid.NewGuid();
+
+            try
+            {
+                database.SetTag(identifier, string.Empty);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Value cannot be null or empty. (Parameter 'value')", exception.Message);
                 Assert.AreEqual("value", exception.ParamName);
             }
         }

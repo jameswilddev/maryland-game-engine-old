@@ -8,14 +8,15 @@ namespace Maryland.Unit.PatchInstructions
     public sealed class SetTagTests
     {
         [TestMethod]
-        public void ExposesGivenEmpty()
+        public void ExposesGivenOneCharacter()
         {
             var identifier = Guid.NewGuid();
+            var value = "a";
 
-            var setTag = new SetTag(identifier, string.Empty);
+            var setTag = new SetTag(identifier, value);
 
             Assert.AreEqual(identifier, setTag.Identifier);
-            Assert.AreEqual(string.Empty, setTag.Value);
+            Assert.AreEqual(value, setTag.Value);
         }
 
         [TestMethod]
@@ -95,7 +96,25 @@ namespace Maryland.Unit.PatchInstructions
             catch (ArgumentNullException exception)
             {
                 Assert.IsNull(exception.InnerException);
-                Assert.AreEqual("Value cannot be null. (Parameter 'value')", exception.Message);
+                Assert.AreEqual("Value cannot be null or empty. (Parameter 'value')", exception.Message);
+                Assert.AreEqual("value", exception.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void ThrowsExceptionWhenValueEmpty()
+        {
+            var identifier = Guid.NewGuid();
+
+            try
+            {
+                _ = new SetTag(identifier, string.Empty);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Value cannot be null or empty. (Parameter 'value')", exception.Message);
                 Assert.AreEqual("value", exception.ParamName);
             }
         }

@@ -1,4 +1,4 @@
-﻿using Maryland.DataTypes;
+using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 using System.Text;
 
@@ -187,9 +187,9 @@ namespace Maryland.Databases
         /// <inheritdoc />
         public void SetTag(Guid identifier, string value)
         {
-            if (value == null)
+            if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentNullException(nameof(value), "Value cannot be null or empty.");
             }
             else if (Encoding.UTF8.GetByteCount(value) > 255)
             {
