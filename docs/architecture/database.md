@@ -75,3 +75,29 @@ An image is an uncompressed 32-bit 2D bitmap graphic.  It is intended for small 
   - An opacity, where 0 is fully transparent and 255 is fully opaque.
 
 All images default to a 1x1 image, where the lone pixel is 0, 0, 0, 0 (fully transparent).
+
+## Meshes
+
+A mesh is a polygonal model and includes:
+
+- Between 1 and 255 transform identifiers (inclusive).
+- Between 0 and 255 texture map identifiers (inclusive).
+- Between 0 and 255 color layer identifiers (inclusive).
+- A flag indicating whether the mesh includes normals.
+- A flag indicating whether the mesh includes tangents.
+- A flag indicating whether the mesh includes bitangents.
+- 1-65535 vertices, each of which includes:
+  - 3x 32-bit IEEE floats representing position (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the normal (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the tangent (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the bitangent (including support for NaN and positive/negative infinity).
+  - 2x 32-bit IEEE floats representing texture coordinates for each map (including support for NaN and positive/negative infinity).
+  - For each color layer:
+    - A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
+    - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
+    - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
+    - An opacity, where 0 is fully transparent and 255 is fully opaque.
+  - Two indices into the list of transform identifiers.
+  - A 32-bit IEEE float representing the blend factor between the two specified transforms, between 0 and 1 (inclusive).
+
+All meshes default to having no normals, tangents, bitangents, texture maps or color layers, a single transform with an all-zero identifier and a single degenerate triangle.
