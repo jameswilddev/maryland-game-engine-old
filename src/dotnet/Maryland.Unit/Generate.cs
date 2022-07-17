@@ -1,4 +1,5 @@
 ﻿using Maryland.DataTypes;
+using System.Collections.Immutable;
 
 namespace Maryland.Unit
 {
@@ -155,7 +156,29 @@ namespace Maryland.Unit
             {
                 output = Color();
             }
-            while (ValueType.Equals(to, output));
+            while (Equals(to, output));
+
+            return output;
+        }
+
+        internal static ImmutableArray<byte> Bytes(int length)
+        {
+            var output = new byte[length];
+            Random.Shared.NextBytes(output);
+            return ImmutableArray.Create(output);
+        }
+
+        internal static ColorWithOpacity ColorWithOpacity() => new(Byte(), Byte(), Byte(), Byte());
+
+        internal static ColorWithOpacity DifferentColorWithOpacity(ColorWithOpacity to)
+        {
+            ColorWithOpacity output;
+
+            do
+            {
+                output = ColorWithOpacity();
+            }
+            while (Equals(to, output));
 
             return output;
         }
