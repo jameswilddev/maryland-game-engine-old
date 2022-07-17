@@ -1,5 +1,6 @@
-using Maryland.DataTypes;
+﻿using Maryland.DataTypes;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Maryland.Unit.DataTypes
 {
@@ -188,7 +189,7 @@ namespace Maryland.Unit.DataTypes
             byte columns = 3;
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
             var a = new Image(columns, pixels);
-            var b = new Image(columns, pixels.ToImmutableArray());
+            var b = new Image(columns, pixels.Select(x => x).ToImmutableArray());
 
             Assert.AreEqual(a, b);
             Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
@@ -199,7 +200,7 @@ namespace Maryland.Unit.DataTypes
         {
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
             var a = new Image(3, pixels);
-            var b = new Image(6, pixels.ToImmutableArray());
+            var b = new Image(6, pixels.Select(x => x).ToImmutableArray());
 
             Assert.AreNotEqual(a, b);
         }

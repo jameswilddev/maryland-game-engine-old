@@ -1,4 +1,4 @@
-using Maryland.PatchInstructions;
+﻿using Maryland.PatchInstructions;
 using System.Collections.Immutable;
 
 namespace Maryland.DataTypes
@@ -68,7 +68,14 @@ namespace Maryland.DataTypes
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return HashCode.Combine(Columns, Pixels);
+            var output = Columns.GetHashCode();
+
+            foreach (var pixel in Pixels)
+            {
+                output = HashCode.Combine(output, pixel);
+            }
+
+            return output;
         }
     }
 }
