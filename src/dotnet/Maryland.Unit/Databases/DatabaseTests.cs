@@ -1,4 +1,4 @@
-using Maryland.Databases;
+﻿using Maryland.Databases;
 using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 using Moq;
@@ -202,9 +202,9 @@ namespace Maryland.Unit.Databases
             Assert.AreEqual(doubleSetColorEntityValue, database.GetColor(doubleSetColorEntity, sharedAttribute));
             Assert.AreEqual(setColorAttributeValue, database.GetColor(sharedEntity, setColorAttribute));
             Assert.AreEqual(doubleSetColorAttributeValue, database.GetColor(sharedEntity, doubleSetColorAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
-            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), sharedAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(sharedAttribute, Guid.NewGuid()));
+            Assert.AreEqual(default, database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.AreEqual(default, database.GetColor(Guid.NewGuid(), sharedAttribute));
+            Assert.AreEqual(default, database.GetColor(sharedAttribute, Guid.NewGuid()));
             CollectionAssert.AreEquivalent
             (
                 new IInstruction[]
@@ -423,9 +423,7 @@ namespace Maryland.Unit.Databases
 
             try
             {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                 database.SetString(entity, attribute, value);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
