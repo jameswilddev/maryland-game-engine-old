@@ -14,7 +14,7 @@ namespace Maryland.DataTypes
         public int Columns;
 
         /// <summary>
-        /// The column-order pixels within the image, starting in the top left corner.
+        /// The row-major pixels within the image, starting in the top left corner.
         /// </summary>
         public readonly ImmutableArray<ColorWithOpacity> Pixels;
 

@@ -61,3 +61,15 @@ A color is 24-bit and includes:
 - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
 
 All colors' values default to 0, 0, 0 (black) when not set.
+
+## Images
+
+An image is an uncompressed 32-bit 2D bitmap graphic.  It is intended for small sprites and textures.  Images include:
+
+- A width in columns.
+- A height in columns.
+- 4 * width * height bytes specifying the colors of the pixels within the image.  This is a repeating pattern of the following, row-major, starting in the top left corner:
+  - A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - An opacity, where 0 is fully transparent and 255 is fully opaque.
