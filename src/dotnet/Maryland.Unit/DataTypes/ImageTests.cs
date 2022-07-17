@@ -16,6 +16,7 @@ namespace Maryland.Unit.DataTypes
             var image = new Image(columns, pixels);
 
             Assert.AreEqual(columns, image.Columns);
+            Assert.AreEqual(2, image.Rows);
             CollectionAssert.AreEqual(pixels, image.Pixels);
         }
 
@@ -28,6 +29,7 @@ namespace Maryland.Unit.DataTypes
             var image = new Image(columns, pixels);
 
             Assert.AreEqual(columns, image.Columns);
+            Assert.AreEqual(1, image.Rows);
             CollectionAssert.AreEqual(pixels, image.Pixels);
         }
 
@@ -40,6 +42,7 @@ namespace Maryland.Unit.DataTypes
             var image = new Image(columns, pixels);
 
             Assert.AreEqual(columns, image.Columns);
+            Assert.AreEqual(6, image.Rows);
             CollectionAssert.AreEqual(pixels, image.Pixels);
         }
 
@@ -52,6 +55,7 @@ namespace Maryland.Unit.DataTypes
             var image = new Image(columns, pixels);
 
             Assert.AreEqual(columns, image.Columns);
+            Assert.AreEqual(255, image.Rows);
             CollectionAssert.AreEqual(pixels, image.Pixels);
         }
 
