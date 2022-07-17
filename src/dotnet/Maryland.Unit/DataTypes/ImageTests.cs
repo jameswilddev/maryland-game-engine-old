@@ -9,7 +9,7 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void ExposesGivenData()
         {
-            var columns = 3;
+            byte columns = 3;
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
 
             var image = new Image(columns, pixels);
@@ -21,7 +21,7 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void ExposesGivenDataOneRow()
         {
-            var columns = 6;
+            byte columns = 6;
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
 
             var image = new Image(columns, pixels);
@@ -33,8 +33,20 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void ExposesGivenDataOneColumn()
         {
-            var columns = 1;
+            byte columns = 1;
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
+
+            var image = new Image(columns, pixels);
+
+            Assert.AreEqual(columns, image.Columns);
+            CollectionAssert.AreEqual(pixels, image.Pixels);
+        }
+
+        [TestMethod]
+        public void ExposesGivenData255Rows()
+        {
+            byte columns = 3;
+            var pixels = Enumerable.Range(0, 765).Select((x) => Generate.ColorWithOpacity()).ToImmutableArray();
 
             var image = new Image(columns, pixels);
 
@@ -45,11 +57,11 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void ThrowsExceptionWhenPixelsUninitialized()
         {
-            var columns = 3;
+            byte columns = 3;
 
             try
             {
-                _ = new Image(columns, default(ImmutableArray<ColorWithOpacity>));
+                _ = new Image(columns, default);
                 Assert.Fail();
             }
             catch (ArgumentNullException exception)
@@ -63,7 +75,7 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void ThrowsExceptionWhenPixelsEmpty()
         {
-            var columns = 3;
+            byte columns = 3;
 
             try
             {
@@ -86,24 +98,6 @@ namespace Maryland.Unit.DataTypes
             try
             {
                 _ = new Image(0, pixels);
-                Assert.Fail();
-            }
-            catch (ArgumentOutOfRangeException exception)
-            {
-                Assert.IsNull(exception.InnerException);
-                Assert.AreEqual("Must be factor of the number of pixels. (Parameter 'columns')", exception.Message);
-                Assert.AreEqual("columns", exception.ParamName);
-            }
-        }
-
-        [TestMethod]
-        public void ThrowsExceptionWhenColumnsNegative()
-        {
-            var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
-
-            try
-            {
-                _ = new Image(-1, pixels);
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -145,15 +139,53 @@ namespace Maryland.Unit.DataTypes
             catch (ArgumentOutOfRangeException exception)
             {
                 Assert.IsNull(exception.InnerException);
-                Assert.AreEqual("Must be factor of the number of pixels. (Parameter 'columns')", exception.Message);
+                Assert.AreEqual("Must be a factor of the number of pixels. (Parameter 'columns')", exception.Message);
                 Assert.AreEqual("columns", exception.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void ThrowsExceptionWhenPixelsDescribes256Rows()
+        {
+            byte columns = 3;
+            var pixels = Enumerable.Range(0, 768).Select((x) => Generate.ColorWithOpacity()).ToImmutableArray();
+
+            try
+            {
+                _ = new Image(columns, pixels);
+                Assert.Fail();
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Contains more than 255 rows. (Parameter 'pixels')", exception.Message);
+                Assert.AreEqual("pixels", exception.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void ThrowsExceptionWhenPixelsDescribes257Rows()
+        {
+            byte columns = 3;
+            var pixels = Enumerable.Range(0, 771).Select((x) => Generate.ColorWithOpacity()).ToImmutableArray();
+
+            try
+            {
+                _ = new Image(columns, pixels);
+                Assert.Fail();
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Contains more than 255 rows. (Parameter 'pixels')", exception.Message);
+                Assert.AreEqual("pixels", exception.ParamName);
             }
         }
 
         [TestMethod]
         public void Equal()
         {
-            var columns = 3;
+            byte columns = 3;
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
             var a = new Image(columns, pixels);
             var b = new Image(columns, pixels.ToImmutableArray());
@@ -175,7 +207,7 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void InequalPixelLength()
         {
-            var columns = 3;
+            byte columns = 3;
             var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
             var a = new Image(columns, pixels);
             var b = new Image(columns, pixels.Concat(new[] { Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity() }).ToImmutableArray());
@@ -186,7 +218,7 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void InequalPixelValue()
         {
-            var columns = 3;
+            byte columns = 3;
             var pixelsA = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
             var pixelsB = pixelsA.Take(4).Concat(new[] { Generate.DifferentColorWithOpacity(pixelsA[4]) }).Concat(pixelsA.Skip(5)).ToImmutableArray();
             var a = new Image(columns, pixelsA);

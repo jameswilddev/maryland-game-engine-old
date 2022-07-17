@@ -11,7 +11,7 @@ namespace Maryland.DataTypes
         /// <summary>
         /// The number of columns within the image.
         /// </summary>
-        public int Columns;
+        public byte Columns;
 
         /// <summary>
         /// The row-major pixels within the image, starting in the top left corner.
@@ -21,7 +21,7 @@ namespace Maryland.DataTypes
         /// <summary>
         /// The number of rows within the image.
         /// </summary>
-        public int Rows => Pixels.Length / Columns;
+        public byte Rows => (byte)(Pixels.Length / Columns);
 
         /// <summary>
         /// Creates a new 32-bits-per-pixel image.
@@ -30,7 +30,8 @@ namespace Maryland.DataTypes
         /// <param name="pixels">The column-order pixels within the image, starting in the top left corner.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="columns"/> is not a factor of <paramref name="pixels"/>.<see cref="ImmutableArray{ColorWithOpacity}.Length"/>.</exception>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="pixels"/> is uninitialized or empty.</exception>
-        public Image(int columns, ImmutableArray<ColorWithOpacity> pixels)
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="pixels"/> contains more than 255 rows.</exception>
+        public Image(byte columns, ImmutableArray<ColorWithOpacity> pixels)
         {
             if (pixels.IsDefaultOrEmpty)
             {
@@ -39,6 +40,10 @@ namespace Maryland.DataTypes
             else if (columns < 1 || columns > pixels.Length || pixels.Length % columns != 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(columns), "Must be a factor of the number of pixels.");
+            }
+            else if (pixels.Length / columns > byte.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pixels), "Contains more than 255 rows.");
             }
             else
             {
@@ -52,7 +57,7 @@ namespace Maryland.DataTypes
         {
             if (obj is Image image)
             {
-                return image.Columns == Columns && image.Pixels.Equals(Pixels);
+                return image.Columns == Columns && image.Pixels.SequenceEqual(Pixels);
             }
             else
             {

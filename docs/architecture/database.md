@@ -66,8 +66,8 @@ All colors' values default to 0, 0, 0 (black) when not set.
 
 An image is an uncompressed 32-bit 2D bitmap graphic.  It is intended for small sprites and textures.  Images include:
 
-- A width in columns.
-- A height in columns.
+- A width in columns, between 1 and 255 (inclusive).
+- A height in columns, between 1 and 255 (inclusive).
 - 4 * width * height bytes specifying the colors of the pixels within the image.  This is a repeating pattern of the following, row-major, starting in the top left corner:
   - A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
   - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
