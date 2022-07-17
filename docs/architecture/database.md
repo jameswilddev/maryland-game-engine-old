@@ -73,3 +73,5 @@ An image is an uncompressed 32-bit 2D bitmap graphic.  It is intended for small 
   - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
   - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
   - An opacity, where 0 is fully transparent and 255 is fully opaque.
+
+All images default to a 1x1 image, where the lone pixel is 0, 0, 0, 0 (fully transparent).

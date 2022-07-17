@@ -182,5 +182,44 @@ namespace Maryland.Unit
 
             return output;
         }
+
+        internal static ImmutableArray<ColorWithOpacity> ColorsWithOpacity(int length)
+        {
+            return Enumerable.Range(0, length).Select((x) => ColorWithOpacity()).ToImmutableArray();
+        }
+
+        internal static Image Image()
+        {
+            byte columns;
+
+            do
+            {
+                columns = Byte();
+            }
+            while (columns < 1);
+
+            byte rows;
+
+            do
+            {
+                rows = Byte();
+            }
+            while (rows < 1);
+
+            return new Image(columns, ColorsWithOpacity(columns * rows));
+        }
+
+        internal static Image DifferentImage(Image to)
+        {
+            Image output;
+
+            do
+            {
+                output = Image();
+            }
+            while (output.Equals(to));
+
+            return output;
+        }
     }
 }

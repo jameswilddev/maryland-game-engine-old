@@ -2,6 +2,7 @@
 using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 using Moq;
+using System.Collections.Immutable;
 
 namespace Maryland.Unit.Databases
 {
@@ -77,6 +78,14 @@ namespace Maryland.Unit.Databases
             var setColorAttributeValue = Generate.Color();
             var doubleSetColorAttribute = Guid.NewGuid();
             var doubleSetColorAttributeValue = Generate.Color();
+            var setImageEntity = Guid.NewGuid();
+            var setImageEntityValue = Generate.Image();
+            var doubleSetImageEntity = Guid.NewGuid();
+            var doubleSetImageEntityValue = Generate.Image();
+            var setImageAttribute = Guid.NewGuid();
+            var setImageAttributeValue = Generate.Image();
+            var doubleSetImageAttribute = Guid.NewGuid();
+            var doubleSetImageAttributeValue = Generate.Image();
             var database = new Database();
 
             database.SetFlag(setFlagEntity, sharedAttribute);
@@ -142,6 +151,11 @@ namespace Maryland.Unit.Databases
             database.SetColor(doubleSetColorEntity, sharedAttribute, doubleSetColorEntityValue);
             database.SetColor(sharedEntity, setColorAttribute, setColorAttributeValue);
             database.SetColor(sharedEntity, doubleSetColorAttribute, doubleSetColorAttributeValue);
+            database.SetImage(setImageEntity, sharedAttribute, setImageEntityValue);
+            database.SetImage(doubleSetImageEntity, sharedAttribute, Generate.Image());
+            database.SetImage(doubleSetImageEntity, sharedAttribute, doubleSetImageEntityValue);
+            database.SetImage(sharedEntity, setImageAttribute, setImageAttributeValue);
+            database.SetImage(sharedEntity, doubleSetImageAttribute, doubleSetImageAttributeValue);
 
             Assert.IsTrue(database.GetFlag(setFlagEntity, sharedAttribute));
             Assert.IsTrue(database.GetFlag(doubleSetFlagEntity, sharedAttribute));
@@ -205,6 +219,13 @@ namespace Maryland.Unit.Databases
             Assert.AreEqual(default, database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
             Assert.AreEqual(default, database.GetColor(Guid.NewGuid(), sharedAttribute));
             Assert.AreEqual(default, database.GetColor(sharedAttribute, Guid.NewGuid()));
+            Assert.AreEqual(setImageEntityValue, database.GetImage(setImageEntity, sharedAttribute));
+            Assert.AreEqual(doubleSetImageEntityValue, database.GetImage(doubleSetImageEntity, sharedAttribute));
+            Assert.AreEqual(setImageAttributeValue, database.GetImage(sharedEntity, setImageAttribute));
+            Assert.AreEqual(doubleSetImageAttributeValue, database.GetImage(sharedEntity, doubleSetImageAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), sharedAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(sharedAttribute, Guid.NewGuid()));
             CollectionAssert.AreEquivalent
             (
                 new IInstruction[]
@@ -251,6 +272,10 @@ namespace Maryland.Unit.Databases
                     new SetColor(doubleSetColorEntity, sharedAttribute, doubleSetColorEntityValue),
                     new SetColor(sharedEntity, setColorAttribute, setColorAttributeValue),
                     new SetColor(sharedEntity, doubleSetColorAttribute, doubleSetColorAttributeValue),
+                    new SetImage(setImageEntity, sharedAttribute, setImageEntityValue),
+                    new SetImage(doubleSetImageEntity, sharedAttribute, doubleSetImageEntityValue),
+                    new SetImage(sharedEntity, setImageAttribute, setImageAttributeValue),
+                    new SetImage(sharedEntity, doubleSetImageAttribute, doubleSetImageAttributeValue),
                 },
                 database.Patch.ToArray()
             );
@@ -298,6 +323,10 @@ namespace Maryland.Unit.Databases
             to.Verify(d => d.SetColor(doubleSetColorEntity, sharedAttribute, doubleSetColorEntityValue), Times.Once());
             to.Verify(d => d.SetColor(sharedEntity, setColorAttribute, setColorAttributeValue), Times.Once());
             to.Verify(d => d.SetColor(sharedEntity, doubleSetColorAttribute, doubleSetColorAttributeValue), Times.Once());
+            to.Verify(d => d.SetImage(setImageEntity, sharedAttribute, setImageEntityValue), Times.Once());
+            to.Verify(d => d.SetImage(doubleSetImageEntity, sharedAttribute, doubleSetImageEntityValue), Times.Once());
+            to.Verify(d => d.SetImage(sharedEntity, setImageAttribute, setImageAttributeValue), Times.Once());
+            to.Verify(d => d.SetImage(sharedEntity, doubleSetImageAttribute, doubleSetImageAttributeValue), Times.Once());
             to.VerifyNoOtherCalls();
             database.Clear();
             Assert.IsFalse(database.GetFlag(setFlagEntity, sharedAttribute));
@@ -355,13 +384,20 @@ namespace Maryland.Unit.Databases
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeOneEntity).Any());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeTwoEntity).Any());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeThreeEntity).Any());
-            Assert.AreEqual(default(Color), database.GetColor(setColorEntity, sharedAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(doubleSetColorEntity, sharedAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(sharedEntity, setColorAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(sharedEntity, doubleSetColorAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
-            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), sharedAttribute));
-            Assert.AreEqual(default(Color), database.GetColor(sharedAttribute, Guid.NewGuid()));
+            Assert.AreEqual(default, database.GetColor(setColorEntity, sharedAttribute));
+            Assert.AreEqual(default, database.GetColor(doubleSetColorEntity, sharedAttribute));
+            Assert.AreEqual(default, database.GetColor(sharedEntity, setColorAttribute));
+            Assert.AreEqual(default, database.GetColor(sharedEntity, doubleSetColorAttribute));
+            Assert.AreEqual(default, database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.AreEqual(default, database.GetColor(Guid.NewGuid(), sharedAttribute));
+            Assert.AreEqual(default, database.GetColor(sharedAttribute, Guid.NewGuid()));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(setImageEntity, sharedAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(doubleSetImageEntity, sharedAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(sharedEntity, setImageAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(sharedEntity, doubleSetImageAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), sharedAttribute));
+            Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(sharedAttribute, Guid.NewGuid()));
             Assert.IsFalse(database.Patch.Any());
             var to2 = new Mock<IDatabase>();
             database.Apply(to2.Object);
@@ -400,9 +436,7 @@ namespace Maryland.Unit.Databases
 
             try
             {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                 database.SetString(entity, attribute, value);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -494,9 +528,7 @@ namespace Maryland.Unit.Databases
 
             try
             {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                 database.SetTag(identifier, value);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -516,9 +548,7 @@ namespace Maryland.Unit.Databases
 
             try
             {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                 database.SetTag(identifier, value);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -538,6 +568,27 @@ namespace Maryland.Unit.Databases
 
             database.SetTag(identity, value);
         }
+
+        [TestMethod]
+        public void SetImageThrowsExceptionWhenValueNull()
+        {
+            var database = new Database();
+            var entity = Guid.NewGuid();
+            var attribute = Guid.NewGuid();
+
+            try
+            {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                database.SetImage(entity, attribute, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+                Assert.Fail();
+            }
+            catch (ArgumentNullException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Value cannot be null. (Parameter 'value')", exception.Message);
+                Assert.AreEqual("value", exception.ParamName);
+            }
+        }
     }
 }
-

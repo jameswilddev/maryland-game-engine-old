@@ -1,5 +1,6 @@
 using Maryland.DataTypes;
 using Maryland.PatchInstructions;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace Maryland.Databases
@@ -29,6 +30,7 @@ namespace Maryland.Databases
         private readonly Dictionary<EntityAttributePair, string> Strings = new();
         private readonly Dictionary<Guid, string> Tags = new();
         private readonly Dictionary<EntityAttributePair, Color> Colors = new();
+        private readonly Dictionary<EntityAttributePair, Image> Images = new();
 
         /// <inheritdoc />
         public IEnumerable<IInstruction> Patch => SetFlags
@@ -39,7 +41,8 @@ namespace Maryland.Databases
             .Concat(ReferenceForward.Select(kv => new SetReference(kv.Key.Entity, kv.Key.Attribute, kv.Value)))
             .Concat(Strings.Select(kv => new SetString(kv.Key.Entity, kv.Key.Attribute, kv.Value)))
             .Concat(Tags.Select(kv => new SetTag(kv.Key, kv.Value)))
-            .Concat(Colors.Select(kv => new SetColor(kv.Key.Entity, kv.Key.Attribute, kv.Value)));
+            .Concat(Colors.Select(kv => new SetColor(kv.Key.Entity, kv.Key.Attribute, kv.Value)))
+            .Concat(Images.Select(kv => new SetImage(kv.Key.Entity, kv.Key.Attribute, kv.Value)));
 
         /// <inheritdoc />
         public void ClearFlag(Guid entity, Guid attribute)
@@ -238,6 +241,11 @@ namespace Maryland.Databases
             {
                 to.SetColor(kv.Key.Entity, kv.Key.Attribute, kv.Value);
             }
+
+            foreach (var kv in Images)
+            {
+                to.SetImage(kv.Key.Entity, kv.Key.Attribute, kv.Value);
+            }
         }
 
         /// <inheritdoc />
@@ -251,6 +259,7 @@ namespace Maryland.Databases
             Strings.Clear();
             Tags.Clear();
             Colors.Clear();
+            Images.Clear();
         }
 
         /// <inheritdoc />
@@ -264,6 +273,34 @@ namespace Maryland.Databases
         public void SetColor(Guid entity, Guid attribute, Color value)
         {
             Colors[new EntityAttributePair(entity, attribute)] = value;
+        }
+
+        private static readonly Image DefaultImage = new(1, ImmutableArray.Create(default(ColorWithOpacity)));
+
+        /// <inheritdoc />
+        public Image GetImage(Guid entity, Guid attribute)
+        {
+            if (Images.TryGetValue(new EntityAttributePair(entity, attribute), out var value))
+            {
+                return value;
+            }
+            else
+            {
+                return DefaultImage;
+            }
+        }
+
+        /// <inheritdoc />
+        public void SetImage(Guid entity, Guid attribute, Image value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            else
+            {
+            Images[new EntityAttributePair(entity, attribute)] = value;
+            }
         }
     }
 }

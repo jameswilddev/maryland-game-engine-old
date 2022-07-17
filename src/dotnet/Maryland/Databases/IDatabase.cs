@@ -1,4 +1,4 @@
-﻿using Maryland.DataTypes;
+using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 
 namespace Maryland.Databases
@@ -68,6 +68,22 @@ namespace Maryland.Databases
         void SetColor(Guid entity, Guid attribute, Color value);
 
         /// <summary>
+        /// Retrieves a <see cref="Image"/>.
+        /// </summary>
+        /// <param name="entity">The identifer of the entity to query.</param>
+        /// <param name="attribute">The identifier of the <see cref="Image"/> to retrieve.</param>
+        /// <returns>The requested <see cref="Image"/>.</returns>
+        Image GetImage(Guid entity, Guid attribute);
+
+        /// <summary>
+        /// Changes a <see cref="Image"/>.
+        /// </summary>
+        /// <param name="entity">The identifer of the entity to change.</param>
+        /// <param name="attribute">The identifier of the <see cref="Image"/> to change.</param>
+        /// <param name="value">The value to change the <see cref="Image"/> to.</param>
+        void SetImage(Guid entity, Guid attribute, Image value);
+
+        /// <summary>
         /// Retrieves a entity reference.
         /// </summary>
         /// <param name="entity">The identifer of the entity to query.</param>
@@ -122,7 +138,7 @@ namespace Maryland.Databases
         /// </summary>
         /// <param name="identifier">The identifier of the tag to change.</param>
         /// <param name="value">The value to change the tag to.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is <see langword="null"/> or <see cref="string.Empty"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> exceeds 255 bytes in length when encoded as UTF-8.</exception>
         void SetTag(Guid identifier, string value);
 
