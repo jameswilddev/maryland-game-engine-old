@@ -98,8 +98,9 @@ namespace Maryland.Unit.PatchInstructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var a = new SetFloat(entity, attribute, Generate.Float());
-            var b = new SetFloat(entity, attribute, Generate.Float());
+            var valueA = Generate.Float();
+            var a = new SetFloat(entity, attribute, valueA);
+            var b = new SetFloat(entity, attribute, Generate.DifferentFloat(valueA));
 
             Assert.AreNotEqual(a, b);
         }

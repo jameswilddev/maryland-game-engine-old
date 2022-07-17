@@ -99,8 +99,9 @@ namespace Maryland.Unit.PatchInstructions
         {
             var entity = Guid.NewGuid();
             var attribute = Guid.NewGuid();
-            var a = new SetColor(entity, attribute, Generate.Color());
-            var b = new SetColor(entity, attribute, Generate.Color());
+            var valueA = Generate.Color();
+            var a = new SetColor(entity, attribute, valueA);
+            var b = new SetColor(entity, attribute, Generate.DifferentColor(valueA));
 
             Assert.AreNotEqual(a, b);
         }

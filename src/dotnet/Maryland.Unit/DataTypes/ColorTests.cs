@@ -35,10 +35,11 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void InequalRed()
         {
+            var redA = Generate.Byte();
             var green = Generate.Byte();
             var blue = Generate.Byte();
-            var a = new Color(Generate.Byte(), green, blue);
-            var b = new Color(Generate.Byte(), green, blue);
+            var a = new Color(redA, green, blue);
+            var b = new Color(Generate.DifferentByte(redA), green, blue);
 
             Assert.AreNotEqual(a, b);
         }
@@ -47,9 +48,10 @@ namespace Maryland.Unit.DataTypes
         public void InequalGreen()
         {
             var red = Generate.Byte();
+            var greenA = Generate.Byte();
             var blue = Generate.Byte();
-            var a = new Color(red, Generate.Byte(), blue);
-            var b = new Color(red, Generate.Byte(), blue);
+            var a = new Color(red, greenA, blue);
+            var b = new Color(red, Generate.DifferentByte(greenA), blue);
 
             Assert.AreNotEqual(a, b);
         }
@@ -59,8 +61,9 @@ namespace Maryland.Unit.DataTypes
         {
             var red = Generate.Byte();
             var green = Generate.Byte();
-            var a = new Color(red, green, Generate.Byte());
-            var b = new Color(red, green, Generate.Byte());
+            var blueA = Generate.Byte();
+            var a = new Color(red, green, blueA);
+            var b = new Color(red, green, Generate.DifferentByte(blueA));
 
             Assert.AreNotEqual(a, b);
         }

@@ -11,11 +11,37 @@ namespace Maryland.Unit
             return BitConverter.ToSingle(bytes);
         }
 
+        internal static float DifferentFloat(float to)
+        {
+            float output;
+
+            do
+            {
+                output = Float();
+            }
+            while (output == to);
+
+            return output;
+        }
+
         internal static byte Byte()
         {
             var bytes = new byte[1];
             Random.Shared.NextBytes(bytes);
             return bytes[0];
+        }
+
+        internal static byte DifferentByte(byte to)
+        {
+            byte output;
+
+            do
+            {
+                output = Byte();
+            }
+            while (output == to);
+
+            return output;
         }
 
         internal static string String()
@@ -26,7 +52,7 @@ namespace Maryland.Unit
         internal static string String254BytesInUTF8()
         {
             var value = string.Empty;
-            
+
             for (var i = 0; i < 62; i++)
             {
                 value += "𩸽";
@@ -86,7 +112,7 @@ namespace Maryland.Unit
         internal static string String65535BytesInUTF8()
         {
             var value = string.Empty;
-            
+
             for (var i = 0; i < 16382; i++)
             {
                 value += "𩸽";
@@ -98,7 +124,7 @@ namespace Maryland.Unit
         internal static string String65536BytesInUTF8()
         {
             var value = string.Empty;
-            
+
             for (var i = 0; i < 16382; i++)
             {
                 value += "𩸽";
@@ -119,6 +145,19 @@ namespace Maryland.Unit
             return $"{value}あ§aaaa";
         }
 
-        internal static Color Color() => new Color(Byte(), Byte(), Byte());
+        internal static Color Color() => new(Byte(), Byte(), Byte());
+
+        internal static Color DifferentColor(Color to)
+        {
+            Color output;
+
+            do
+            {
+                output = Color();
+            }
+            while (ValueType.Equals(to, output));
+
+            return output;
+        }
     }
 }
