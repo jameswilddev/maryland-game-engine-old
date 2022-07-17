@@ -1,4 +1,5 @@
-﻿using Maryland.PatchInstructions;
+﻿using Maryland.DataTypes;
+using Maryland.PatchInstructions;
 
 namespace Maryland.Databases
 {
@@ -49,6 +50,22 @@ namespace Maryland.Databases
         /// <param name="attribute">The identifier of the float to change.</param>
         /// <param name="value">The value to change the float to.</param>
         void SetFloat(Guid entity, Guid attribute, float value);
+
+        /// <summary>
+        /// Retrieves a color.
+        /// </summary>
+        /// <param name="entity">The identifer of the entity to query.</param>
+        /// <param name="attribute">The identifier of the color to retrieve.</param>
+        /// <returns>The requested color.</returns>
+        Color GetColor(Guid entity, Guid attribute);
+
+        /// <summary>
+        /// Changes a color.
+        /// </summary>
+        /// <param name="entity">The identifer of the entity to change.</param>
+        /// <param name="attribute">The identifier of the color to change.</param>
+        /// <param name="value">The value to change the color to.</param>
+        void SetColor(Guid entity, Guid attribute, Color value);
 
         /// <summary>
         /// Retrieves a entity reference.

@@ -1,4 +1,5 @@
 ﻿using Maryland.Databases;
+using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 using Moq;
 
@@ -68,6 +69,14 @@ namespace Maryland.Unit.Databases
             var setThreeChangeThreeReferrerB = Guid.NewGuid();
             var setThreeChangeThreeReferrerC = Guid.NewGuid();
             var setThreeChangeThreeEntity = Guid.NewGuid();
+            var setColorEntity = Guid.NewGuid();
+            var setColorEntityValue = Generate.Color();
+            var doubleSetColorEntity = Guid.NewGuid();
+            var doubleSetColorEntityValue = Generate.Color();
+            var setColorAttribute = Guid.NewGuid();
+            var setColorAttributeValue = Generate.Color();
+            var doubleSetColorAttribute = Guid.NewGuid();
+            var doubleSetColorAttributeValue = Generate.Color();
             var database = new Database();
 
             database.SetFlag(setFlagEntity, sharedAttribute);
@@ -128,6 +137,11 @@ namespace Maryland.Unit.Databases
             database.SetReference(setThreeChangeThreeReferrerB, sharedAttribute, sharedEntity);
             database.SetReference(setThreeChangeThreeReferrerA, sharedAttribute, sharedEntity);
             database.SetReference(setThreeChangeThreeReferrerC, sharedAttribute, sharedEntity);
+            database.SetColor(setColorEntity, sharedAttribute, setColorEntityValue);
+            database.SetColor(doubleSetColorEntity, sharedAttribute, Generate.Color());
+            database.SetColor(doubleSetColorEntity, sharedAttribute, doubleSetColorEntityValue);
+            database.SetColor(sharedEntity, setColorAttribute, setColorAttributeValue);
+            database.SetColor(sharedEntity, doubleSetColorAttribute, doubleSetColorAttributeValue);
 
             Assert.IsTrue(database.GetFlag(setFlagEntity, sharedAttribute));
             Assert.IsTrue(database.GetFlag(doubleSetFlagEntity, sharedAttribute));
@@ -184,6 +198,13 @@ namespace Maryland.Unit.Databases
             CollectionAssert.AreEquivalent(new[] { setThreeChangeOneReferrerA, setThreeChangeOneReferrerC }, database.GetReferrers(sharedAttribute, setThreeChangeOneEntity).ToArray());
             CollectionAssert.AreEquivalent(new[] { setThreeChangeTwoReferrerC }, database.GetReferrers(sharedAttribute, setThreeChangeTwoEntity).ToArray());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeThreeEntity).Any());
+            Assert.AreEqual(setColorEntityValue, database.GetColor(setColorEntity, sharedAttribute));
+            Assert.AreEqual(doubleSetColorEntityValue, database.GetColor(doubleSetColorEntity, sharedAttribute));
+            Assert.AreEqual(setColorAttributeValue, database.GetColor(sharedEntity, setColorAttribute));
+            Assert.AreEqual(doubleSetColorAttributeValue, database.GetColor(sharedEntity, doubleSetColorAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), sharedAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(sharedAttribute, Guid.NewGuid()));
             CollectionAssert.AreEquivalent
             (
                 new IInstruction[]
@@ -226,6 +247,10 @@ namespace Maryland.Unit.Databases
                     new SetReference(setThreeChangeThreeReferrerA, sharedAttribute, sharedEntity),
                     new SetReference(setThreeChangeThreeReferrerB, sharedAttribute, sharedEntity),
                     new SetReference(setThreeChangeThreeReferrerC, sharedAttribute, sharedEntity),
+                    new SetColor(setColorEntity, sharedAttribute, setColorEntityValue),
+                    new SetColor(doubleSetColorEntity, sharedAttribute, doubleSetColorEntityValue),
+                    new SetColor(sharedEntity, setColorAttribute, setColorAttributeValue),
+                    new SetColor(sharedEntity, doubleSetColorAttribute, doubleSetColorAttributeValue),
                 },
                 database.Patch.ToArray()
             );
@@ -269,6 +294,10 @@ namespace Maryland.Unit.Databases
             to.Verify(d => d.SetReference(setThreeChangeThreeReferrerA, sharedAttribute, sharedEntity), Times.Once());
             to.Verify(d => d.SetReference(setThreeChangeThreeReferrerB, sharedAttribute, sharedEntity), Times.Once());
             to.Verify(d => d.SetReference(setThreeChangeThreeReferrerC, sharedAttribute, sharedEntity), Times.Once());
+            to.Verify(d => d.SetColor(setColorEntity, sharedAttribute, setColorEntityValue), Times.Once());
+            to.Verify(d => d.SetColor(doubleSetColorEntity, sharedAttribute, doubleSetColorEntityValue), Times.Once());
+            to.Verify(d => d.SetColor(sharedEntity, setColorAttribute, setColorAttributeValue), Times.Once());
+            to.Verify(d => d.SetColor(sharedEntity, doubleSetColorAttribute, doubleSetColorAttributeValue), Times.Once());
             to.VerifyNoOtherCalls();
             database.Clear();
             Assert.IsFalse(database.GetFlag(setFlagEntity, sharedAttribute));
@@ -326,6 +355,13 @@ namespace Maryland.Unit.Databases
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeOneEntity).Any());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeTwoEntity).Any());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, setThreeChangeThreeEntity).Any());
+            Assert.AreEqual(default(Color), database.GetColor(setColorEntity, sharedAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(doubleSetColorEntity, sharedAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(sharedEntity, setColorAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(sharedEntity, doubleSetColorAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), Guid.NewGuid()));
+            Assert.AreEqual(default(Color), database.GetColor(Guid.NewGuid(), sharedAttribute));
+            Assert.AreEqual(default(Color), database.GetColor(sharedAttribute, Guid.NewGuid()));
             Assert.IsFalse(database.Patch.Any());
             var to2 = new Mock<IDatabase>();
             database.Apply(to2.Object);

@@ -26,6 +26,8 @@ All strings' values default to empty strings.
 
 ## Floats
 
+A float includes:
+
 - The identifier of the entity holding the float.
 - The identifier of the attribute.
 - A 32-bit IEEE float (the value, including support for NaN and positive/negative infinity).
@@ -47,3 +49,15 @@ Tags are used to give human-readable names to entity and attribute identifiers. 
 - Up to 255 bytes of UTF-8 encoded text (the value; cannot be empty).
 
 All tags' values default to the hexadecimal representation of the identifier they represent.
+
+## Colors
+
+A color is 24-bit and includes:
+
+- The identifier of the entity holding the color.
+- The identifier of the attribute.
+- A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+- A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+- A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+
+All colors' values default to 0, 0, 0 (black) when not set.

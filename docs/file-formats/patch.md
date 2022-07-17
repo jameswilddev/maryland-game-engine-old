@@ -50,3 +50,13 @@ Immediately followed by:
 - 16 bytes representing the identifier of the tag.
 - An unsigned byte specifying the length of the string in UTF-8 encoded bytes.
 - The bytes of the string, UTF-8 encoded.
+
+## 6 - Set Color
+
+Immediately followed by:
+
+- 16 bytes representing the identifier of the entity holding the color.
+- 16 bytes representing the identifier of the attribute.
+- An unsigned byte specifying the intensity of the red channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+- An unsigned byte specifying the intensity of the green channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+- An unsigned byte specifying the intensity of the blue channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.

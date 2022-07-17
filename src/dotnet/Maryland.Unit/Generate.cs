@@ -1,4 +1,6 @@
-﻿namespace Maryland.Unit
+﻿using Maryland.DataTypes;
+
+namespace Maryland.Unit
 {
     internal static class Generate
     {
@@ -7,6 +9,13 @@
             var bytes = new byte[4];
             Random.Shared.NextBytes(bytes);
             return BitConverter.ToSingle(bytes);
+        }
+
+        internal static byte Byte()
+        {
+            var bytes = new byte[1];
+            Random.Shared.NextBytes(bytes);
+            return bytes[0];
         }
 
         internal static string String()
@@ -109,5 +118,7 @@
 
             return $"{value}あ§aaaa";
         }
+
+        internal static Color Color() => new Color(Byte(), Byte(), Byte());
     }
 }
