@@ -69,7 +69,7 @@ An image is an uncompressed 32-bit 2D bitmap graphic.  It is intended for small 
 - A width in columns.
 - A height in columns.
 - 4 * width * height bytes specifying the colors of the pixels within the image.  This is a repeating pattern of the following, row-major, starting in the top left corner:
-  - A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
-  - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
-  - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
+  - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
+  - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
   - An opacity, where 0 is fully transparent and 255 is fully opaque.
