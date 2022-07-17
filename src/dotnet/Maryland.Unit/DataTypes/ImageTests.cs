@@ -1,4 +1,4 @@
-﻿using Maryland.DataTypes;
+using Maryland.DataTypes;
 using System.Collections.Immutable;
 
 namespace Maryland.Unit.DataTypes
@@ -109,7 +109,7 @@ namespace Maryland.Unit.DataTypes
             catch (ArgumentOutOfRangeException exception)
             {
                 Assert.IsNull(exception.InnerException);
-                Assert.AreEqual("Must be factor of the number of pixels. (Parameter 'columns')", exception.Message);
+                Assert.AreEqual("Must be a factor of the number of pixels. (Parameter 'columns')", exception.Message);
                 Assert.AreEqual("columns", exception.ParamName);
             }
         }
@@ -127,7 +127,7 @@ namespace Maryland.Unit.DataTypes
             catch (ArgumentOutOfRangeException exception)
             {
                 Assert.IsNull(exception.InnerException);
-                Assert.AreEqual("Must be factor of the number of pixels. (Parameter 'columns')", exception.Message);
+                Assert.AreEqual("Must be a factor of the number of pixels. (Parameter 'columns')", exception.Message);
                 Assert.AreEqual("columns", exception.ParamName);
             }
         }

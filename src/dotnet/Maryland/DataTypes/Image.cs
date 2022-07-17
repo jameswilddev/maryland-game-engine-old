@@ -1,4 +1,4 @@
-﻿using Maryland.PatchInstructions;
+using Maryland.PatchInstructions;
 using System.Collections.Immutable;
 
 namespace Maryland.DataTypes
@@ -38,7 +38,7 @@ namespace Maryland.DataTypes
             }
             else if (columns < 1 || columns > pixels.Length || pixels.Length % columns != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(columns), "Must be factor of the number of pixels.");
+                throw new ArgumentOutOfRangeException(nameof(columns), "Must be a factor of the number of pixels.");
             }
             else
             {
