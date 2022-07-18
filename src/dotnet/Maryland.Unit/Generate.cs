@@ -1,5 +1,6 @@
 ﻿using Maryland.DataTypes;
 using System.Collections.Immutable;
+using System.Numerics;
 
 namespace Maryland.Unit
 {
@@ -220,6 +221,41 @@ namespace Maryland.Unit
             while (output.Equals(to));
 
             return output;
+        }
+
+        internal static Vector2 Vector2()
+        {
+            return new Vector2(Float(), Float());
+        }
+
+        internal static ImmutableArray<Vector2> Vector2s(int length)
+        {
+            return Enumerable.Range(0, length).Select(x => Vector2()).ToImmutableArray();
+        }
+
+        internal static Vector3 Vector3()
+        {
+            return new Vector3(Float(), Float(), Float());
+        }
+
+        internal static ImmutableArray<Vector3> Vector3s(int length)
+        {
+            return Enumerable.Range(0, length).Select(x => Vector3()).ToImmutableArray();
+        }
+
+        internal static float UnitInterval()
+        {
+            return (float)Random.Shared.NextDouble();
+        }
+
+        internal static ImmutableArray<float> UnitIntervals(int length)
+        {
+            return Enumerable.Range(0, length).Select(x => UnitInterval()).ToImmutableArray();
+        }
+
+        internal static ImmutableSortedSet<Guid> Guids(int length)
+        {
+            return Enumerable.Range(0, length).Select(x => Guid.NewGuid()).ToImmutableSortedSet();
         }
     }
 }
