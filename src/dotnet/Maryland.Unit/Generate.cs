@@ -1,4 +1,4 @@
-﻿using Maryland.DataTypes;
+using Maryland.DataTypes;
 using System.Collections.Immutable;
 using System.Numerics;
 
@@ -9,8 +9,18 @@ namespace Maryland.Unit
         internal static float Float()
         {
             var bytes = new byte[4];
+
+            while (true)
+            {
             Random.Shared.NextBytes(bytes);
-            return BitConverter.ToSingle(bytes);
+
+                var output = BitConverter.ToSingle(bytes);
+
+                if (!float.IsNaN(output))
+                {
+                    return output;
+                }
+            }
         }
 
         internal static float DifferentFloat(float to)
