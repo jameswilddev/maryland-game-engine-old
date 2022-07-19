@@ -18,6 +18,7 @@ namespace Maryland.Unit.DataTypes
             Assert.AreEqual(red, color.Red);
             Assert.AreEqual(green, color.Green);
             Assert.AreEqual(blue, color.Blue);
+            CollectionAssert.AreEqual(new[] { red, green, blue, opacity }, color.Serialized.ToArray());
         }
 
         [TestMethod]

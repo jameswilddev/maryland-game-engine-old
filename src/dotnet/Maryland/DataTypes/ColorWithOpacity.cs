@@ -42,5 +42,19 @@
             Blue = blue;
             Opacity = opacity;
         }
+
+        /// <summary>
+        /// A sequence of <see cref="byte"/>s which describe <see langword="this"/> <see cref="ColorWithOpacity"/>.
+        /// </summary>
+        public IEnumerable<byte> Serialized
+        {
+            get
+            {
+                yield return Red;
+                yield return Green;
+                yield return Blue;
+                yield return Opacity;
+            }
+        }
     }
 }
