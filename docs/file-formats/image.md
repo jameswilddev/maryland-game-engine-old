@@ -1,6 +1,6 @@
 # [Maryland](../../readme.md) > [Documentation](../readme.md) > [File Formats](./readme.md) > Image
 
-An image file describes an image as would be held in a [database](../architecture/database.md).
+An image file describes an image as would be held in a [database](../architecture/database.md), and includes:
 
 - An unsigned byte specifying the width of the image in columns.
 - An unsigned byte specifying the height of the image in columns.
