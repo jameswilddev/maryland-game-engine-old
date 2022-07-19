@@ -87,17 +87,22 @@ A mesh is a polygonal model and includes:
 - A flag indicating whether the mesh includes tangents.
 - A flag indicating whether the mesh includes bitangents.
 - 1-65535 vertices, each of which includes:
-  - 3x 32-bit IEEE floats representing position (including support for NaN and positive/negative infinity).
-  - When enabled, 3x 32-bit IEEE floats representing the normal (including support for NaN and positive/negative infinity).
-  - When enabled, 3x 32-bit IEEE floats representing the tangent (including support for NaN and positive/negative infinity).
-  - When enabled, 3x 32-bit IEEE floats representing the bitangent (including support for NaN and positive/negative infinity).
-  - 2x 32-bit IEEE floats representing texture coordinates for each map (including support for NaN and positive/negative infinity).
-  - For each color layer:
+  - Two indices into the list of transform identifiers.
+  - An unsigned byte representing the blend factor between the two specified transforms, where 0 is the first and 255 is the second.
+  - 3x 32-bit IEEE floats representing position relative to the first transform (including support for NaN and positive/negative infinity).
+  - 3x 32-bit IEEE floats representing position relative to the second transform (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the normal relative to the first transform (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the normal relative to the second transform (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the tangent relative to the first transform (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the tangent relative to the second transform (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the bitangent relative to the first transform (including support for NaN and positive/negative infinity).
+  - When enabled, 3x 32-bit IEEE floats representing the bitangent relative to the second transform (including support for NaN and positive/negative infinity).
+  - For each vertex for each texture map:
+    - 2x 32-bit IEEE floats representing texture coordinates (including support for NaN and positive/negative infinity).
+  - For each vertex for each color layer:
     - A red channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
     - A green channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
     - A blue channel intensity, where 0 is the minimum possible intensity and 255 is the maximum possible intensity, premultiplied by the opacity.
     - An opacity, where 0 is fully transparent and 255 is fully opaque.
-  - Two indices into the list of transform identifiers.
-  - A 32-bit IEEE float representing the blend factor between the two specified transforms, between 0 and 1 (inclusive).
 
 All meshes default to having no normals, tangents, bitangents, texture maps or color layers, a single transform with an all-zero identifier and a single degenerate triangle.
