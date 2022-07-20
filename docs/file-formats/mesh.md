@@ -58,3 +58,5 @@ An mesh file describes a mesh as would be held in a [database](../architecture/d
     - An unsigned byte specifying the intensity of green channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
     - An unsigned byte specifying the intensity of blue channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
     - An unsigned byte specifying the opacity, where 0 is fully transparent and 255 is fully opaque.
+- A little-endian unsigned 16-bit integer specifying the number of indices.  Must be greater than 2.
+- An unsigned 16-bit integer for each index.  Must be less than the number of vertices.
