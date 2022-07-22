@@ -425,9 +425,11 @@ namespace Maryland.DataTypes
             .Concat(SecondTransformBitangents.HasValue ? Serialize.Vector3s(SecondTransformBitangents.Value) : Enumerable.Empty<byte>())
             .Concat(TransformBlendFactors)
             .Concat(Serialize.Byte((byte)TextureCoordinates.Count))
-            .Concat(TextureCoordinates.SelectMany(kv => Serialize.Guid(kv.Key).Concat(Serialize.Vector2s(kv.Value))))
+            .Concat(TextureCoordinates.Keys.SelectMany(Serialize.Guid))
+            .Concat(TextureCoordinates.Values.SelectMany(x => Serialize.Vector2s(x)))
             .Concat(Serialize.Byte((byte)Colors.Count))
-            .Concat(Colors.SelectMany(kv => Serialize.Guid(kv.Key).Concat(kv.Value.SelectMany(c => c.Serialized))))
+            .Concat(Colors.Keys.SelectMany(Serialize.Guid))
+            .Concat(Colors.Values.SelectMany(x => x).SelectMany(x => x.Serialized))
             .Concat(Serialize.U16((ushort)Indices.Length))
             .Concat(Serialize.U16s(Indices));
     }

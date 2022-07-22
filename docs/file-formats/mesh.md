@@ -46,17 +46,15 @@ An mesh file describes a mesh as would be held in a [database](../architecture/d
   - 4 bytes representing the bitangent on the Z axis relative to the second transform, as a little-endian IEEE 32-bit float.
 - An unsigned byte for each vertex, specifying the blend between the first and second transforms, where 0 is the first transform, and 255 is the second transform.
 - An unsigned byte specifying the number of texture maps.
-- For each texture map:
-  - 16 bytes specifying its identifier (no two texture maps may have the same identifier in the same mesh).
-  - For each vertex:
-    - 4 bytes representing the texture coordinate on the X axis, as a little-endian IEEE 32-bit float.
-    - 4 bytes representing the texture coordinate on the Y axis, as a little-endian IEEE 32-bit float.
-- For each color layer:
-  - 16 bytes specifying its identifier (no two color layers may have the same identifier in the same mesh).
-  - For each vertex:
-    - An unsigned byte specifying the intensity of red channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
-    - An unsigned byte specifying the intensity of green channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
-    - An unsigned byte specifying the intensity of blue channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
-    - An unsigned byte specifying the opacity, where 0 is fully transparent and 255 is fully opaque.
+- For each texture map, 16 bytes specifying its identifier (no two texture maps may have the same identifier in the same mesh).
+- For each texture map, for each vertex:
+  - 4 bytes representing the texture coordinate on the X axis, as a little-endian IEEE 32-bit float.
+  - 4 bytes representing the texture coordinate on the Y axis, as a little-endian IEEE 32-bit float.
+- For each color layer, 16 bytes specifying its identifier (no two color layers may have the same identifier in the same mesh).
+- For each color layer, for each vertex:
+  - An unsigned byte specifying the intensity of red channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - An unsigned byte specifying the intensity of green channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - An unsigned byte specifying the intensity of blue channel, where 0 is the minimum possible intensity and 255 is the maximum possible intensity.
+  - An unsigned byte specifying the opacity, where 0 is fully transparent and 255 is fully opaque.
 - A little-endian unsigned 16-bit integer specifying the number of indices.  Must be greater than 2.
 - An unsigned 16-bit integer for each index.  Must be less than the number of vertices.
