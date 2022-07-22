@@ -9,6 +9,16 @@ namespace Maryland.Unit.Databases
     [TestClass]
     public sealed class DatabaseTests
     {
+        private static void AssertEmptyMesh(Mesh mesh)
+        {
+            CollectionAssert.AreEqual(new[] { Guid.Empty }, mesh.Transforms);
+            Assert.AreEqual(1, mesh.FirstTransformPositions.Length);
+            Assert.AreEqual(3, mesh.Indices.Length);
+            Assert.IsNull(mesh.FirstTransformNormals);
+            Assert.IsNull(mesh.FirstTransformTangents);
+            Assert.IsNull(mesh.FirstTransformBitangents);
+        }
+
         [TestMethod]
         public void AllowsRetrievalOfStoredInformation()
         {
@@ -86,6 +96,14 @@ namespace Maryland.Unit.Databases
             var setImageAttributeValue = Generate.Image();
             var doubleSetImageAttribute = Guid.NewGuid();
             var doubleSetImageAttributeValue = Generate.Image();
+            var setMeshEntity = Guid.NewGuid();
+            var setMeshEntityValue = Generate.Mesh();
+            var doubleSetMeshEntity = Guid.NewGuid();
+            var doubleSetMeshEntityValue = Generate.Mesh();
+            var setMeshAttribute = Guid.NewGuid();
+            var setMeshAttributeValue = Generate.Mesh();
+            var doubleSetMeshAttribute = Guid.NewGuid();
+            var doubleSetMeshAttributeValue = Generate.Mesh();
             var database = new Database();
 
             database.SetFlag(setFlagEntity, sharedAttribute);
@@ -156,6 +174,11 @@ namespace Maryland.Unit.Databases
             database.SetImage(doubleSetImageEntity, sharedAttribute, doubleSetImageEntityValue);
             database.SetImage(sharedEntity, setImageAttribute, setImageAttributeValue);
             database.SetImage(sharedEntity, doubleSetImageAttribute, doubleSetImageAttributeValue);
+            database.SetMesh(setMeshEntity, sharedAttribute, setMeshEntityValue);
+            database.SetMesh(doubleSetMeshEntity, sharedAttribute, Generate.Mesh());
+            database.SetMesh(doubleSetMeshEntity, sharedAttribute, doubleSetMeshEntityValue);
+            database.SetMesh(sharedEntity, setMeshAttribute, setMeshAttributeValue);
+            database.SetMesh(sharedEntity, doubleSetMeshAttribute, doubleSetMeshAttributeValue);
 
             Assert.IsTrue(database.GetFlag(setFlagEntity, sharedAttribute));
             Assert.IsTrue(database.GetFlag(doubleSetFlagEntity, sharedAttribute));
@@ -226,6 +249,13 @@ namespace Maryland.Unit.Databases
             Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), Guid.NewGuid()));
             Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), sharedAttribute));
             Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(sharedAttribute, Guid.NewGuid()));
+            Assert.AreEqual(setMeshEntityValue, database.GetMesh(setMeshEntity, sharedAttribute));
+            Assert.AreEqual(doubleSetMeshEntityValue, database.GetMesh(doubleSetMeshEntity, sharedAttribute));
+            Assert.AreEqual(setMeshAttributeValue, database.GetMesh(sharedEntity, setMeshAttribute));
+            Assert.AreEqual(doubleSetMeshAttributeValue, database.GetMesh(sharedEntity, doubleSetMeshAttribute));
+            AssertEmptyMesh(database.GetMesh(Guid.NewGuid(), Guid.NewGuid()));
+            AssertEmptyMesh(database.GetMesh(Guid.NewGuid(), sharedAttribute));
+            AssertEmptyMesh(database.GetMesh(sharedAttribute, Guid.NewGuid()));
             CollectionAssert.AreEquivalent
             (
                 new IInstruction[]
@@ -276,6 +306,10 @@ namespace Maryland.Unit.Databases
                     new SetImage(doubleSetImageEntity, sharedAttribute, doubleSetImageEntityValue),
                     new SetImage(sharedEntity, setImageAttribute, setImageAttributeValue),
                     new SetImage(sharedEntity, doubleSetImageAttribute, doubleSetImageAttributeValue),
+                    new SetMesh(setMeshEntity, sharedAttribute, setMeshEntityValue),
+                    new SetMesh(doubleSetMeshEntity, sharedAttribute, doubleSetMeshEntityValue),
+                    new SetMesh(sharedEntity, setMeshAttribute, setMeshAttributeValue),
+                    new SetMesh(sharedEntity, doubleSetMeshAttribute, doubleSetMeshAttributeValue),
                 },
                 database.Patch.ToArray()
             );
@@ -327,6 +361,10 @@ namespace Maryland.Unit.Databases
             to.Verify(d => d.SetImage(doubleSetImageEntity, sharedAttribute, doubleSetImageEntityValue), Times.Once());
             to.Verify(d => d.SetImage(sharedEntity, setImageAttribute, setImageAttributeValue), Times.Once());
             to.Verify(d => d.SetImage(sharedEntity, doubleSetImageAttribute, doubleSetImageAttributeValue), Times.Once());
+            to.Verify(d => d.SetMesh(setMeshEntity, sharedAttribute, setMeshEntityValue), Times.Once());
+            to.Verify(d => d.SetMesh(doubleSetMeshEntity, sharedAttribute, doubleSetMeshEntityValue), Times.Once());
+            to.Verify(d => d.SetMesh(sharedEntity, setMeshAttribute, setMeshAttributeValue), Times.Once());
+            to.Verify(d => d.SetMesh(sharedEntity, doubleSetMeshAttribute, doubleSetMeshAttributeValue), Times.Once());
             to.VerifyNoOtherCalls();
             database.Clear();
             Assert.IsFalse(database.GetFlag(setFlagEntity, sharedAttribute));
@@ -398,6 +436,13 @@ namespace Maryland.Unit.Databases
             Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), Guid.NewGuid()));
             Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(Guid.NewGuid(), sharedAttribute));
             Assert.AreEqual(new Image(1, ImmutableArray.Create(default(ColorWithOpacity))), database.GetImage(sharedAttribute, Guid.NewGuid()));
+            AssertEmptyMesh(database.GetMesh(setMeshEntity, sharedAttribute));
+            AssertEmptyMesh(database.GetMesh(doubleSetMeshEntity, sharedAttribute));
+            AssertEmptyMesh(database.GetMesh(sharedEntity, setMeshAttribute));
+            AssertEmptyMesh(database.GetMesh(sharedEntity, doubleSetMeshAttribute));
+            AssertEmptyMesh(database.GetMesh(Guid.NewGuid(), Guid.NewGuid()));
+            AssertEmptyMesh(database.GetMesh(Guid.NewGuid(), sharedAttribute));
+            AssertEmptyMesh(database.GetMesh(sharedAttribute, Guid.NewGuid()));
             Assert.IsFalse(database.Patch.Any());
             var to2 = new Mock<IDatabase>();
             database.Apply(to2.Object);
@@ -578,9 +623,27 @@ namespace Maryland.Unit.Databases
 
             try
             {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-                database.SetImage(entity, attribute, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+                database.SetImage(entity, attribute, null!);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Value cannot be null. (Parameter 'value')", exception.Message);
+                Assert.AreEqual("value", exception.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void SetMeshThrowsExceptionWhenValueNull()
+        {
+            var database = new Database();
+            var entity = Guid.NewGuid();
+            var attribute = Guid.NewGuid();
+
+            try
+            {
+                database.SetMesh(entity, attribute, null!);
                 Assert.Fail();
             }
             catch (ArgumentNullException exception)

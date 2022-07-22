@@ -68,3 +68,11 @@ Immediately followed by:
 - 16 bytes representing the identifier of the entity holding the image.
 - 16 bytes representing the identifier of the attribute.
 - An [image](./image.md).
+
+## 8 - Set Mesh
+
+Immediately followed by:
+
+- 16 bytes representing the identifier of the entity holding the mesh.
+- 16 bytes representing the identifier of the attribute.
+- A [mesh](./mesh.md).

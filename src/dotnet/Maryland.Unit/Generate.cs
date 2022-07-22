@@ -287,5 +287,39 @@ namespace Maryland.Unit
         {
             return Enumerable.Range(0, length).Select(x => Guid.NewGuid()).ToImmutableSortedSet();
         }
+
+        internal static bool Boolean()
+        {
+            return Random.Shared.Next(0, 2) == 1;
+        }
+
+        internal static Mesh Mesh()
+        {
+            var numberOfTransforms = Random.Shared.Next(1, 256);
+            var numberOfVertices = Random.Shared.Next(1, 65536);
+
+            var withNormals = Boolean();
+            var withTangents = Boolean();
+            var withBitangents = Boolean();
+
+            return new Mesh
+            (
+                Enumerable.Range(0, numberOfTransforms).Select(x => Guid.NewGuid()).ToImmutableSortedSet(),
+                Enumerable.Range(0, numberOfVertices).Select(x => (byte)Random.Shared.Next(0, numberOfTransforms)).ToImmutableArray(),
+                Vector3s(numberOfVertices),
+                withNormals ? Vector3s(numberOfVertices) : null,
+                withTangents ? Vector3s(numberOfVertices) : null,
+                withBitangents ? Vector3s(numberOfVertices) : null,
+                Enumerable.Range(0, numberOfVertices).Select(x => (byte)Random.Shared.Next(0, numberOfTransforms)).ToImmutableArray(),
+                Vector3s(numberOfVertices),
+                withNormals ? Vector3s(numberOfVertices) : null,
+                withTangents ? Vector3s(numberOfVertices) : null,
+                withBitangents ? Vector3s(numberOfVertices) : null,
+                Bytes(numberOfVertices),
+                Enumerable.Range(0, Byte()).ToImmutableSortedDictionary(k => Guid.NewGuid(), k => Vector2s(numberOfVertices)),
+                Enumerable.Range(0, Byte()).ToImmutableSortedDictionary(k => Guid.NewGuid(), k => ColorsWithOpacity(numberOfVertices)),
+                Enumerable.Range(0, Random.Shared.Next(3, 65536)).Select(k => (ushort)Random.Shared.Next(0, numberOfVertices)).ToImmutableArray()
+            );
+        }
     }
 }

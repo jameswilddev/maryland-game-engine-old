@@ -4,12 +4,12 @@ using Maryland.DataTypes;
 namespace Maryland.PatchInstructions
 {
     /// <summary>
-    /// An instruction to set a 32-bit red/green/blue/opacity image within a patch.
+    /// An instruction to set a polygonal <see cref="Mesh"/> within a patch.
     /// </summary>
-    public sealed class SetImage : IInstruction
+    public sealed class SetMesh : IInstruction
     {
         /// <summary>
-        /// The identifier of the entity which holds the image.
+        /// The identifier of the entity which holds the mesh.
         /// </summary>
         public readonly Guid Entity;
 
@@ -19,17 +19,17 @@ namespace Maryland.PatchInstructions
         public readonly Guid Attribute;
 
         /// <summary>
-        /// The image to set.
+        /// The <see cref="Mesh"/> to set.
         /// </summary>
-        public readonly Image Value;
+        public readonly Mesh Value;
 
         /// <summary>
-        /// Creates an instruction to set a 32-bit red/green/blue/opacity image within a patch.
+        /// Creates an instruction to set a polygonal <see cref="Mesh"/> within a patch.
         /// </summary>
         /// <param name="entity">The identifier of the entity which holds the float.</param>
         /// <param name="attribute">The identifier of the attribute to set.</param>
-        /// <param name="value">The image to set.</param>
-        public SetImage(Guid entity, Guid attribute, Image value)
+        /// <param name="value">The <see cref="Mesh"/> to set.</param>
+        public SetMesh(Guid entity, Guid attribute, Mesh value)
         {
             Entity = entity;
             Attribute = attribute;
@@ -39,24 +39,22 @@ namespace Maryland.PatchInstructions
         /// <inheritdoc />
         public void ApplyTo(IDatabase database)
         {
-            database.SetImage(Entity, Attribute, Value);
+            database.SetMesh(Entity, Attribute, Value);
         }
 
         /// <inheritdoc />
         public IEnumerable<byte> Serialized => Serialize
-            .Byte(7)
+            .Byte(8)
             .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute))
-            .Concat(Serialize.Byte(Value.Columns))
-            .Concat(Serialize.Byte(Value.Rows))
-            .Concat(Value.Pixels.SelectMany(pixel => new[] { pixel.Red, pixel.Green, pixel.Blue, pixel.Opacity }));
+            .Concat(Value.Serialized);
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is SetImage setImage)
+            if (obj is SetMesh setMesh)
             {
-                return setImage.Entity == Entity && setImage.Attribute == Attribute && setImage.Value.Equals(Value);
+                return setMesh.Entity == Entity && setMesh.Attribute == Attribute && setMesh.Value.Equals(Value);
             }
             else
             {

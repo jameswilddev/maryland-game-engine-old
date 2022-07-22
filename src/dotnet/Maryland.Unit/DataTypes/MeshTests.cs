@@ -7,7 +7,7 @@ namespace Maryland.Unit.DataTypes
     [TestClass]
     public sealed class MeshTests
     {
-        private static readonly ImmutableArray<Vector3> FirstTransformPositions = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> FirstTransformPositions = ImmutableArray.Create
         (
             new Vector3(0.693f, 0.761f, 0.993f),
             new Vector3(0.586f, 0.918f, 0.189f),
@@ -21,7 +21,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.566f, 0.969f, 0.882f)
         );
 
-        private static readonly ImmutableArray<Vector3> FirstTransformNormals = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> FirstTransformNormals = ImmutableArray.Create
         (
             new Vector3(0.241f, 0.896f, 0.192f),
             new Vector3(0.306f, 0.829f, 0.372f),
@@ -35,7 +35,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.861f, 0.675f, 0.475f)
         );
 
-        private static readonly ImmutableArray<Vector3> FirstTransformTangents = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> FirstTransformTangents = ImmutableArray.Create
         (
             new Vector3(0.074f, 0.760f, 0.976f),
             new Vector3(0.336f, 0.582f, 0.998f),
@@ -49,7 +49,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.754f, 0.009f, 0.722f)
         );
 
-        private static readonly ImmutableArray<Vector3> FirstTransformBitangents = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> FirstTransformBitangents = ImmutableArray.Create
         (
             new Vector3(0.694f, 0.620f, 0.305f),
             new Vector3(0.432f, 0.317f, 0.725f),
@@ -63,7 +63,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.077f, 0.687f, 0.564f)
         );
 
-        private static readonly ImmutableArray<Vector3> SecondTransformPositions = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> SecondTransformPositions = ImmutableArray.Create
         (
             new Vector3(0.799f, 0.067f, 0.479f),
             new Vector3(0.143f, 0.672f, 0.619f),
@@ -77,7 +77,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.593f, 0.755f, 0.382f)
         );
 
-        private static readonly ImmutableArray<Vector3> SecondTransformNormals = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> SecondTransformNormals = ImmutableArray.Create
         (
             new Vector3(0.422f, 0.542f, 0.298f),
             new Vector3(0.527f, 0.850f, 0.365f),
@@ -91,7 +91,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.182f, 0.149f, 0.163f)
         );
 
-        private static readonly ImmutableArray<Vector3> SecondTransformTangents = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> SecondTransformTangents = ImmutableArray.Create
         (
             new Vector3(0.030f, 0.701f, 0.086f),
             new Vector3(0.693f, 0.474f, 0.281f),
@@ -105,7 +105,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.679f, 0.915f, 0.975f)
         );
 
-        private static readonly ImmutableArray<Vector3> SecondTransformBitangents = ImmutableArray.Create
+        internal static readonly ImmutableArray<Vector3> SecondTransformBitangents = ImmutableArray.Create
         (
             new Vector3(0.132f, 0.704f, 0.945f),
             new Vector3(0.528f, 0.102f, 0.035f),
@@ -119,7 +119,7 @@ namespace Maryland.Unit.DataTypes
             new Vector3(0.165f, 0.346f, 0.183f)
         );
 
-        private static readonly ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>> TextureCoordinates = ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>>
+        internal static readonly ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>> TextureCoordinates = ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>>
             .Empty
             .Add
             (
@@ -173,7 +173,7 @@ namespace Maryland.Unit.DataTypes
                 )
             );
 
-        private static readonly ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>> Colors = ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>>
+        internal static readonly ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>> Colors = ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>>
             .Empty
             .Add
             (
@@ -244,7 +244,7 @@ namespace Maryland.Unit.DataTypes
                 )
             );
 
-        private static readonly ImmutableSortedSet<Guid> Transforms = ImmutableSortedSet.Create
+        internal static readonly ImmutableSortedSet<Guid> Transforms = ImmutableSortedSet.Create
         (
             new Guid("7f9fcb78-7a0f-4a1c-ab2e-c6e9cfd7e6dc"),
             new Guid("345bb841-ed88-4070-8b46-6f9d3821ae2d"),
@@ -254,12 +254,12 @@ namespace Maryland.Unit.DataTypes
             new Guid("c35a9015-9500-4331-b5bf-525160dfe918")
         );
 
-        private static readonly ImmutableArray<byte> FirstTransformIndices = ImmutableArray.Create<byte>(1, 0, 4, 2, 1, 5, 3, 0, 4, 2);
-        private static readonly ImmutableArray<byte> SecondTransformIndices = ImmutableArray.Create<byte>(2, 0, 1, 4, 5, 0, 0, 1, 3, 1);
-        private static readonly ImmutableArray<byte> TransformBlendFactors = ImmutableArray.Create<byte>(0x08, 0x1d, 0xe7, 0x6f, 0xe0, 0x4b, 0xab, 0xe6, 0xa4, 0xc2);
-        private static readonly ImmutableArray<ushort> Indices = ImmutableArray.Create<ushort>(3, 0, 6, 9, 5, 8);
+        internal static readonly ImmutableArray<byte> FirstTransformIndices = ImmutableArray.Create<byte>(1, 0, 4, 2, 1, 5, 3, 0, 4, 2);
+        internal static readonly ImmutableArray<byte> SecondTransformIndices = ImmutableArray.Create<byte>(2, 0, 1, 4, 5, 0, 0, 1, 3, 1);
+        internal static readonly ImmutableArray<byte> TransformBlendFactors = ImmutableArray.Create<byte>(0x08, 0x1d, 0xe7, 0x6f, 0xe0, 0x4b, 0xab, 0xe6, 0xa4, 0xc2);
+        internal static readonly ImmutableArray<ushort> Indices = ImmutableArray.Create<ushort>(3, 0, 6, 9, 5, 8);
 
-        private static readonly ImmutableArray<byte> SerializedTransforms = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedTransforms = ImmutableArray.Create<byte>
         (
             // Quantity.
             6,
@@ -273,7 +273,7 @@ namespace Maryland.Unit.DataTypes
             0xc3, 0x5a, 0x90, 0x15, 0x95, 0x00, 0x43, 0x31, 0xb5, 0xbf, 0x52, 0x51, 0x60, 0xdf, 0xe9, 0x18
         );
 
-        private static readonly ImmutableArray<byte> SerializedFirstTransformPositions = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedFirstTransformPositions = ImmutableArray.Create<byte>
         (
             0x73, 0x68, 0x31, 0x3f, 0xe5, 0xd0, 0x42, 0x3f, 0x3f, 0x35, 0x7e, 0x3f,
             0x19, 0x04, 0x16, 0x3f, 0x0c, 0x02, 0x6b, 0x3f, 0x37, 0x89, 0x41, 0x3e,
@@ -287,7 +287,7 @@ namespace Maryland.Unit.DataTypes
             0x60, 0xe5, 0x10, 0x3f, 0x62, 0x10, 0x78, 0x3f, 0xc1, 0xca, 0x61, 0x3f
         );
 
-        private static readonly ImmutableArray<byte> SerializedFirstTransformNormals = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedFirstTransformNormals = ImmutableArray.Create<byte>
         (
             0xb4, 0xc8, 0x76, 0x3e, 0x42, 0x60, 0x65, 0x3f, 0xa6, 0x9b, 0x44, 0x3e,
             0x08, 0xac, 0x9c, 0x3e, 0x58, 0x39, 0x54, 0x3f, 0xc9, 0x76, 0xbe, 0x3e,
@@ -301,7 +301,7 @@ namespace Maryland.Unit.DataTypes
             0x7f, 0x6a, 0x5c, 0x3f, 0xcd, 0xcc, 0x2c, 0x3f, 0x33, 0x33, 0xf3, 0x3e
         );
 
-        private static readonly ImmutableArray<byte> SerializedFirstTransformTangents = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedFirstTransformTangents = ImmutableArray.Create<byte>
         (
             0x50, 0x8d, 0x97, 0x3d, 0x5c, 0x8f, 0x42, 0x3f, 0x23, 0xdb, 0x79, 0x3f,
             0x31, 0x08, 0xac, 0x3e, 0xf4, 0xfd, 0x14, 0x3f, 0xee, 0x7c, 0x7f, 0x3f,
@@ -315,7 +315,7 @@ namespace Maryland.Unit.DataTypes
             0x25, 0x06, 0x41, 0x3f, 0xbc, 0x74, 0x13, 0x3c, 0xfe, 0xd4, 0x38, 0x3f
         );
 
-        private static readonly ImmutableArray<byte> SerializedFirstTransformBitangents = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedFirstTransformBitangents = ImmutableArray.Create<byte>
         (
             0xfc, 0xa9, 0x31, 0x3f, 0x52, 0xb8, 0x1e, 0x3f, 0xf6, 0x28, 0x9c, 0x3e,
             0x1b, 0x2f, 0xdd, 0x3e, 0xd3, 0x4d, 0xa2, 0x3e, 0x9a, 0x99, 0x39, 0x3f,
@@ -329,7 +329,7 @@ namespace Maryland.Unit.DataTypes
             0x2d, 0xb2, 0x9d, 0x3d, 0x3b, 0xdf, 0x2f, 0x3f, 0x4e, 0x62, 0x10, 0x3f
         );
 
-        private static readonly ImmutableArray<byte> SerializedSecondTransformPositions = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedSecondTransformPositions = ImmutableArray.Create<byte>
         (
             0x44, 0x8b, 0x4c, 0x3f, 0x4c, 0x37, 0x89, 0x3d, 0x7d, 0x3f, 0xf5, 0x3e,
             0x98, 0x6e, 0x12, 0x3e, 0x31, 0x08, 0x2c, 0x3f, 0xc9, 0x76, 0x1e, 0x3f,
@@ -343,7 +343,7 @@ namespace Maryland.Unit.DataTypes
             0xd9, 0xce, 0x17, 0x3f, 0xae, 0x47, 0x41, 0x3f, 0x81, 0x95, 0xc3, 0x3e
         );
 
-        private static readonly ImmutableArray<byte> SerializedSecondTransformNormals = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedSecondTransformNormals = ImmutableArray.Create<byte>
         (
             0x62, 0x10, 0xd8, 0x3e, 0x83, 0xc0, 0x0a, 0x3f, 0x75, 0x93, 0x98, 0x3e,
             0x79, 0xe9, 0x06, 0x3f, 0x9a, 0x99, 0x59, 0x3f, 0x48, 0xe1, 0xba, 0x3e,
@@ -357,7 +357,7 @@ namespace Maryland.Unit.DataTypes
             0x35, 0x5e, 0x3a, 0x3e, 0x75, 0x93, 0x18, 0x3e, 0x79, 0xe9, 0x26, 0x3e
         );
 
-        private static readonly ImmutableArray<byte> SerializedSecondTransformTangents = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedSecondTransformTangents = ImmutableArray.Create<byte>
         (
             0x8f, 0xc2, 0xf5, 0x3c, 0xbc, 0x74, 0x33, 0x3f, 0xc5, 0x20, 0xb0, 0x3d,
             0x73, 0x68, 0x31, 0x3f, 0x21, 0xb0, 0xf2, 0x3e, 0x3b, 0xdf, 0x8f, 0x3e,
@@ -371,7 +371,7 @@ namespace Maryland.Unit.DataTypes
             0xf2, 0xd2, 0x2d, 0x3f, 0x71, 0x3d, 0x6a, 0x3f, 0x9a, 0x99, 0x79, 0x3f
         );
 
-        private static readonly ImmutableArray<byte> SerializedSecondTransformBitangents = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedSecondTransformBitangents = ImmutableArray.Create<byte>
         (
             0x02, 0x2b, 0x07, 0x3e, 0x58, 0x39, 0x34, 0x3f, 0x85, 0xeb, 0x71, 0x3f,
             0x02, 0x2b, 0x07, 0x3f, 0x60, 0xe5, 0xd0, 0x3d, 0x29, 0x5c, 0x0f, 0x3d,
@@ -385,7 +385,7 @@ namespace Maryland.Unit.DataTypes
             0xc3, 0xf5, 0x28, 0x3e, 0xe9, 0x26, 0xb1, 0x3e, 0x5a, 0x64, 0x3b, 0x3e
         );
 
-        private static readonly ImmutableArray<byte> SerializedTextureMaps = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedTextureMaps = ImmutableArray.Create<byte>
         (
             // Quantity.
             3,
@@ -430,7 +430,7 @@ namespace Maryland.Unit.DataTypes
             0x42, 0x60, 0x45, 0x3f, 0x42, 0x60, 0x25, 0x3f
         );
 
-        private static readonly ImmutableArray<byte> SerializedColorLayers = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedColorLayers = ImmutableArray.Create<byte>
         (
             // Quantity.
             4,
@@ -487,7 +487,7 @@ namespace Maryland.Unit.DataTypes
             0x8a, 0xa0, 0xfd, 0xf5
         );
 
-        private static readonly ImmutableArray<byte> SerializedIndices = ImmutableArray.Create<byte>
+        internal static readonly ImmutableArray<byte> SerializedIndices = ImmutableArray.Create<byte>
         (
             // Number of indices.
             6, 0,
@@ -496,7 +496,7 @@ namespace Maryland.Unit.DataTypes
             3, 0, 0, 0, 6, 0, 9, 0, 5, 0, 8, 0
         );
 
-        private static byte[] Concatenated(params IEnumerable<byte>[] arrays)
+        internal static byte[] Concatenated(params IEnumerable<byte>[] arrays)
         {
             var output = new List<byte>();
 

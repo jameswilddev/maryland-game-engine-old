@@ -44,7 +44,8 @@ namespace Maryland.Databases
             .Concat(Strings.Select(kv => new SetString(kv.Key.Entity, kv.Key.Attribute, kv.Value)))
             .Concat(Tags.Select(kv => new SetTag(kv.Key, kv.Value)))
             .Concat(Colors.Select(kv => new SetColor(kv.Key.Entity, kv.Key.Attribute, kv.Value)))
-            .Concat(Images.Select(kv => new SetImage(kv.Key.Entity, kv.Key.Attribute, kv.Value)));
+            .Concat(Images.Select(kv => new SetImage(kv.Key.Entity, kv.Key.Attribute, kv.Value)))
+            .Concat(Meshes.Select(kv => new SetMesh(kv.Key.Entity, kv.Key.Attribute, kv.Value)));
 
         /// <inheritdoc />
         public void ClearFlag(Guid entity, Guid attribute)
@@ -248,6 +249,11 @@ namespace Maryland.Databases
             {
                 to.SetImage(kv.Key.Entity, kv.Key.Attribute, kv.Value);
             }
+
+            foreach (var kv in Meshes)
+            {
+                to.SetMesh(kv.Key.Entity, kv.Key.Attribute, kv.Value);
+            }
         }
 
         /// <inheritdoc />
@@ -262,6 +268,7 @@ namespace Maryland.Databases
             Tags.Clear();
             Colors.Clear();
             Images.Clear();
+            Meshes.Clear();
         }
 
         /// <inheritdoc />
