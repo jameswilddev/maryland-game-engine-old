@@ -1,6 +1,7 @@
-using Maryland.DataTypes;
+﻿using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 using System.Collections.Immutable;
+using System.Numerics;
 using System.Text;
 
 namespace Maryland.Databases
@@ -31,6 +32,7 @@ namespace Maryland.Databases
         private readonly Dictionary<Guid, string> Tags = new();
         private readonly Dictionary<EntityAttributePair, Color> Colors = new();
         private readonly Dictionary<EntityAttributePair, Image> Images = new();
+        private readonly Dictionary<EntityAttributePair, Mesh> Meshes = new();
 
         /// <inheritdoc />
         public IEnumerable<IInstruction> Patch => SetFlags
@@ -299,7 +301,52 @@ namespace Maryland.Databases
             }
             else
             {
-            Images[new EntityAttributePair(entity, attribute)] = value;
+                Images[new EntityAttributePair(entity, attribute)] = value;
+            }
+        }
+
+        private static readonly Mesh DefaultMesh = new
+        (
+            ImmutableSortedSet.Create(Guid.Empty),
+            ImmutableArray.Create<byte>(0),
+            ImmutableArray.Create(default(Vector3)),
+            null,
+            null,
+            null,
+            ImmutableArray.Create<byte>(0),
+            ImmutableArray.Create(default(Vector3)),
+            null,
+            null,
+            null,
+            ImmutableArray.Create<byte>(0),
+            ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>>.Empty,
+            ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>>.Empty,
+            ImmutableArray.Create<ushort>(0, 0, 0)
+        );
+
+        /// <inheritdoc />
+        public Mesh GetMesh(Guid entity, Guid attribute)
+        {
+            if (Meshes.TryGetValue(new EntityAttributePair(entity, attribute), out var value))
+            {
+                return value;
+            }
+            else
+            {
+                return DefaultMesh;
+            }
+        }
+
+        /// <inheritdoc />
+        public void SetMesh(Guid entity, Guid attribute, Mesh value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            else
+            {
+                Meshes[new EntityAttributePair(entity, attribute)] = value;
             }
         }
     }

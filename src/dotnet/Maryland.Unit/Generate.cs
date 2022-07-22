@@ -1,4 +1,4 @@
-using Maryland.DataTypes;
+﻿using Maryland.DataTypes;
 using System.Collections.Immutable;
 using System.Numerics;
 
@@ -12,7 +12,7 @@ namespace Maryland.Unit
 
             while (true)
             {
-            Random.Shared.NextBytes(bytes);
+                Random.Shared.NextBytes(bytes);
 
                 var output = BitConverter.ToSingle(bytes);
 
@@ -54,6 +54,13 @@ namespace Maryland.Unit
             while (output == to);
 
             return output;
+        }
+
+        internal static ushort Ushort()
+        {
+            var bytes = new byte[2];
+            Random.Shared.NextBytes(bytes);
+            return BitConverter.ToUInt16(bytes);
         }
 
         internal static string String()
@@ -246,6 +253,19 @@ namespace Maryland.Unit
         internal static Vector3 Vector3()
         {
             return new Vector3(Float(), Float(), Float());
+        }
+
+        internal static Vector3 DifferentVector3(Vector3 to)
+        {
+            Vector3 output;
+
+            do
+            {
+                output = Vector3();
+            }
+            while (output.Equals(to));
+
+            return output;
         }
 
         internal static ImmutableArray<Vector3> Vector3s(int length)

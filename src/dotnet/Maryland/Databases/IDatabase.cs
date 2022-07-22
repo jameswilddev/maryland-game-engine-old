@@ -1,4 +1,4 @@
-using Maryland.DataTypes;
+﻿using Maryland.DataTypes;
 using Maryland.PatchInstructions;
 
 namespace Maryland.Databases
@@ -82,6 +82,22 @@ namespace Maryland.Databases
         /// <param name="attribute">The identifier of the <see cref="Image"/> to change.</param>
         /// <param name="value">The value to change the <see cref="Image"/> to.</param>
         void SetImage(Guid entity, Guid attribute, Image value);
+
+        /// <summary>
+        /// Retrieves a <see cref="Mesh"/>.
+        /// </summary>
+        /// <param name="entity">The identifer of the entity to query.</param>
+        /// <param name="attribute">The identifier of the <see cref="Mesh"/> to retrieve.</param>
+        /// <returns>The requested <see cref="Mesh"/>.</returns>
+        Mesh GetMesh(Guid entity, Guid attribute);
+
+        /// <summary>
+        /// Changes a <see cref="Mesh"/>.
+        /// </summary>
+        /// <param name="entity">The identifer of the entity to change.</param>
+        /// <param name="attribute">The identifier of the <see cref="Mesh"/> to change.</param>
+        /// <param name="value">The value to change the <see cref="Mesh"/> to.</param>
+        void SetMesh(Guid entity, Guid attribute, Mesh value);
 
         /// <summary>
         /// Retrieves a entity reference.
