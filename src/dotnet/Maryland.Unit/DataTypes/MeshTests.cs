@@ -866,21 +866,21 @@ namespace Maryland.Unit.DataTypes
         [TestMethod]
         public void AllowsSmallDatasets()
         {
-            var transforms = Generate.Guids(1);
-            var firstTransformIndices = ImmutableArray.Create<byte>(0);
-            var firstTransformPositions = Generate.Vector3s(1);
-            var firstTransformNormals = Generate.Vector3s(1);
-            var firstTransformTangents = Generate.Vector3s(1);
-            var firstTransformBitangents = Generate.Vector3s(1);
-            var secondTransformIndices = ImmutableArray.Create<byte>(0);
-            var secondTransformPositions = Generate.Vector3s(1);
-            var secondTransformNormals = Generate.Vector3s(1);
-            var secondTransformTangents = Generate.Vector3s(1);
-            var secondTransformBitangents = Generate.Vector3s(1);
-            var transformBlendFactors = Generate.Bytes(1);
-            var textureCoordinates = ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>>.Empty;
-            var colors = ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>>.Empty;
-            var indices = ImmutableArray.Create<ushort>(0, 0, 0);
+                var transforms = Generate.Guids(1);
+                var firstTransformIndices = ImmutableArray.Create<byte>(0);
+                var firstTransformPositions = Generate.Vector3s(1);
+                var firstTransformNormals = Generate.Vector3s(1);
+                var firstTransformTangents = Generate.Vector3s(1);
+                var firstTransformBitangents = Generate.Vector3s(1);
+                var secondTransformIndices = ImmutableArray.Create<byte>(0);
+                var secondTransformPositions = Generate.Vector3s(1);
+                var secondTransformNormals = Generate.Vector3s(1);
+                var secondTransformTangents = Generate.Vector3s(1);
+                var secondTransformBitangents = Generate.Vector3s(1);
+                var transformBlendFactors = Generate.Bytes(1);
+                var textureCoordinates = ImmutableSortedDictionary<Guid, ImmutableArray<Vector2>>.Empty;
+                var colors = ImmutableSortedDictionary<Guid, ImmutableArray<ColorWithOpacity>>.Empty;
+                var indices = ImmutableArray.Create<ushort>(0, 0, 0);
 
             var mesh = new Mesh
             (
