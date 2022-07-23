@@ -10,6 +10,7 @@
         /// </summary>
         /// <param name="bytes">The <see cref="byte"/> stream to deserialize.</param>
         /// <returns>The <see cref="Mesh"/> deserialized from the given <paramref name="bytes"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="bytes"/> is <see langword="null"/>.</exception>
         /// <exception cref="InvalidDataException">Thrown when the given <paramref name="bytes"/> do not represent a valid <see cref="Mesh"/>.</exception>
         ValueTask<Mesh> Deserialize(IAsyncEnumerable<byte> bytes);
     }
