@@ -58,36 +58,5 @@ namespace Maryland
         internal static IEnumerable<byte> ShortString(string value) => Byte((byte)Encoding.UTF8.GetByteCount(value)).Concat(UTF8(value));
 
         internal static IEnumerable<byte> LongString(string value) => U16((ushort)Encoding.UTF8.GetByteCount(value)).Concat(UTF8(value));
-
-        internal static IEnumerable<byte> Bits(params bool[] bits)
-        {
-            byte nextOutput = 0;
-
-            for (var i = 0; i < bits.Length; i++)
-            {
-                nextOutput >>= 1;
-
-                if (bits[i])
-                {
-                    nextOutput |= 128;
-                }
-
-                if (i % 8 == 7)
-                {
-                    yield return nextOutput;
-                    nextOutput = 0;
-                }
-            }
-
-            if (bits.Length % 8 != 0)
-            {
-                for (var i = 8; i > bits.Length % 8; i--)
-                {
-                    nextOutput >>= 1;
-                }
-
-                yield return nextOutput;
-            }
-        }
     }
 }

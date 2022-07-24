@@ -1,4 +1,5 @@
 ﻿using Maryland.DataTypes;
+using Maryland.PatchInstructions;
 using System.Collections.Immutable;
 using System.Numerics;
 
@@ -948,6 +949,39 @@ namespace Maryland.Unit.DataTypes
                 Assert.IsNull(exception.InnerException);
                 Assert.AreEqual("Value must be initialized. (Parameter 'firstTransformPositions')", exception.Message);
                 Assert.AreEqual("firstTransformPositions", exception.ParamName);
+            }
+        }
+
+        [TestMethod]
+        public void ThrowsExceptionWhenSecondTransformPositionsUninitialized()
+        {
+            try
+            {
+                _ = new Mesh
+                (
+                    Transforms,
+                    FirstTransformIndices,
+                    FirstTransformPositions,
+                    null,
+                    null,
+                    null,
+                    SecondTransformIndices,
+                    default,
+                    null,
+                    null,
+                    null,
+                    TransformBlendFactors,
+                    TextureCoordinates,
+                    Colors,
+                    Indices
+                );
+                Assert.Fail();
+            }
+            catch (ArgumentNullException exception)
+            {
+                Assert.IsNull(exception.InnerException);
+                Assert.AreEqual("Value must be initialized. (Parameter 'secondTransformPositions')", exception.Message);
+                Assert.AreEqual("secondTransformPositions", exception.ParamName);
             }
         }
 
@@ -4144,6 +4178,22 @@ namespace Maryland.Unit.DataTypes
             );
 
             Assert.AreNotEqual(a, b);
+        }
+
+        [TestMethod]
+        public void InequalNull()
+        {
+            var a = Generate.Mesh();
+
+            Assert.AreNotEqual(a, null);
+        }
+
+        [TestMethod]
+        public void InequalType()
+        {
+            var a = Generate.Mesh();
+
+            Assert.AreNotEqual(a, 1);
         }
     }
 }

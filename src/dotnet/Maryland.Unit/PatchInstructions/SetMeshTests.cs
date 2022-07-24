@@ -136,5 +136,21 @@ namespace Maryland.Unit.PatchInstructions
 
             Assert.AreNotEqual(a, b);
         }
+
+        [TestMethod]
+        public void InequalNull()
+        {
+            var a = new SetMesh(Guid.NewGuid(), Guid.NewGuid(), Generate.Mesh());
+
+            Assert.AreNotEqual(a, null);
+        }
+
+        [TestMethod]
+        public void InequalType()
+        {
+            var a = new SetMesh(Guid.NewGuid(), Guid.NewGuid(), Generate.Mesh());
+
+            Assert.AreNotEqual(a, 1);
+        }
     }
 }

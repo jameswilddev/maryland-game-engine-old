@@ -408,8 +408,10 @@ namespace Maryland.DataTypes
         /// <summary>
         /// A sequence of <see cref="byte"/>s which describe <see langword="this"/> <see cref="Mesh"/>.
         /// </summary>
-        public IEnumerable<byte> Serialized => Serialize
-            .Bits(FirstTransformNormals.HasValue, FirstTransformTangents.HasValue, FirstTransformBitangents.HasValue)
+        public IEnumerable<byte> Serialized => new byte[] 
+            {
+                (byte)((FirstTransformNormals.HasValue ? 1 : 0) + (FirstTransformTangents.HasValue ? 2 : 0) +  (FirstTransformBitangents.HasValue ? 4 : 0))
+            }
             .Concat(Serialize.U16((ushort)FirstTransformPositions.Length))
             .Concat(Serialize.Byte((byte)Transforms.Count))
             .Concat(Serialize.Guids(Transforms))

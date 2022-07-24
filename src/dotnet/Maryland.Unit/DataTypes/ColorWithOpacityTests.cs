@@ -86,5 +86,21 @@ namespace Maryland.Unit.DataTypes
 
             Assert.AreNotEqual(a, b);
         }
+
+        [TestMethod]
+        public void InequalNull()
+        {
+            var a = new ColorWithOpacity(Generate.Byte(), Generate.Byte(), Generate.Byte(), Generate.Byte());
+
+            Assert.AreNotEqual(a, null);
+        }
+
+        [TestMethod]
+        public void InequalType()
+        {
+            var a = new ColorWithOpacity(Generate.Byte(), Generate.Byte(), Generate.Byte(), Generate.Byte());
+
+            Assert.AreNotEqual(a, 1);
+        }
     }
 }

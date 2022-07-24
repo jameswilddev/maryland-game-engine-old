@@ -1,6 +1,7 @@
 ﻿using Maryland.Databases;
 using Maryland.PatchInstructions;
 using Moq;
+using System.Collections.Immutable;
 
 namespace Maryland.Unit.PatchInstructions
 {
@@ -83,6 +84,22 @@ namespace Maryland.Unit.PatchInstructions
             var b = new ClearFlag(entity, Guid.NewGuid());
 
             Assert.AreNotEqual(a, b);
+        }
+
+        [TestMethod]
+        public void InequalNull()
+        {
+            var a = new ClearFlag(Guid.NewGuid(), Guid.NewGuid());
+
+            Assert.AreNotEqual(a, null);
+        }
+
+        [TestMethod]
+        public void InequalType()
+        {
+            var a = new ClearFlag(Guid.NewGuid(), Guid.NewGuid());
+
+            Assert.AreNotEqual(a, 1);
         }
     }
 }

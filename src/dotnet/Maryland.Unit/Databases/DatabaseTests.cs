@@ -64,6 +64,8 @@ namespace Maryland.Unit.Databases
             var setReferenceAttributeValue = Guid.NewGuid();
             var doubleSetReferenceAttribute = Guid.NewGuid();
             var doubleSetReferenceAttributeValue = Guid.NewGuid();
+            var duplicateSetReferenceAttribute = Guid.NewGuid();
+            var duplicateSetReferenceValue = Guid.NewGuid();
             var setThreeReferrerA = Guid.NewGuid();
             var setThreeReferrerB = Guid.NewGuid();
             var setThreeReferrerC = Guid.NewGuid();
@@ -146,6 +148,8 @@ namespace Maryland.Unit.Databases
             database.SetReference(sharedEntity, setReferenceAttribute, setReferenceAttributeValue);
             database.SetReference(sharedEntity, doubleSetReferenceAttribute, Guid.NewGuid());
             database.SetReference(sharedEntity, doubleSetReferenceAttribute, doubleSetReferenceAttributeValue);
+            database.SetReference(sharedEntity, duplicateSetReferenceAttribute, duplicateSetReferenceValue);
+            database.SetReference(sharedEntity, duplicateSetReferenceAttribute, duplicateSetReferenceValue);
             database.SetReference(setThreeReferrerA, sharedAttribute, setThreeEntity);
             database.SetReference(setThreeReferrerB, sharedAttribute, setThreeEntity);
             database.SetReference(setThreeReferrerC, sharedAttribute, setThreeEntity);
@@ -216,6 +220,7 @@ namespace Maryland.Unit.Databases
             Assert.AreEqual(doubleSetReferenceEntityValue, database.GetReference(doubleSetReferenceEntity, sharedAttribute));
             Assert.AreEqual(setReferenceAttributeValue, database.GetReference(sharedEntity, setReferenceAttribute));
             Assert.AreEqual(doubleSetReferenceAttributeValue, database.GetReference(sharedEntity, doubleSetReferenceAttribute));
+            Assert.AreEqual(duplicateSetReferenceValue, database.GetReference(sharedEntity, duplicateSetReferenceAttribute));
             Assert.AreEqual(Guid.Empty, database.GetReference(Guid.NewGuid(), Guid.NewGuid()));
             Assert.AreEqual(Guid.Empty, database.GetReference(Guid.NewGuid(), sharedAttribute));
             Assert.AreEqual(Guid.Empty, database.GetReference(sharedAttribute, Guid.NewGuid()));
@@ -223,6 +228,7 @@ namespace Maryland.Unit.Databases
             CollectionAssert.AreEquivalent(new[] { doubleSetReferenceEntity }, database.GetReferrers(sharedAttribute, doubleSetReferenceEntityValue).ToArray());
             CollectionAssert.AreEquivalent(new[] { sharedEntity }, database.GetReferrers(setReferenceAttribute, setReferenceAttributeValue).ToArray());
             CollectionAssert.AreEquivalent(new[] { sharedEntity }, database.GetReferrers(doubleSetReferenceAttribute, doubleSetReferenceAttributeValue).ToArray());
+            CollectionAssert.AreEquivalent(new[] { sharedEntity }, database.GetReferrers(duplicateSetReferenceAttribute, duplicateSetReferenceValue).ToArray());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, Guid.NewGuid()).Any());
             Assert.IsFalse(database.GetReferrers(Guid.NewGuid(), setReferenceEntityValue).Any());
             Assert.IsFalse(database.GetReferrers(Guid.NewGuid(), doubleSetReferenceEntityValue).Any());
@@ -286,6 +292,7 @@ namespace Maryland.Unit.Databases
                     new SetReference(doubleSetReferenceEntity, sharedAttribute, doubleSetReferenceEntityValue),
                     new SetReference(sharedEntity, setReferenceAttribute, setReferenceAttributeValue),
                     new SetReference(sharedEntity, doubleSetReferenceAttribute, doubleSetReferenceAttributeValue),
+                    new SetReference(sharedEntity, duplicateSetReferenceAttribute, duplicateSetReferenceValue),
                     new SetReference(setThreeReferrerA, sharedAttribute, setThreeEntity),
                     new SetReference(setThreeReferrerB, sharedAttribute, setThreeEntity),
                     new SetReference(setThreeReferrerC, sharedAttribute, setThreeEntity),
@@ -341,6 +348,7 @@ namespace Maryland.Unit.Databases
             to.Verify(d => d.SetReference(doubleSetReferenceEntity, sharedAttribute, doubleSetReferenceEntityValue), Times.Once());
             to.Verify(d => d.SetReference(sharedEntity, setReferenceAttribute, setReferenceAttributeValue), Times.Once());
             to.Verify(d => d.SetReference(sharedEntity, doubleSetReferenceAttribute, doubleSetReferenceAttributeValue), Times.Once());
+            to.Verify(d => d.SetReference(sharedEntity, duplicateSetReferenceAttribute, duplicateSetReferenceValue), Times.Once());
             to.Verify(d => d.SetReference(setThreeReferrerA, sharedAttribute, setThreeEntity), Times.Once());
             to.Verify(d => d.SetReference(setThreeReferrerB, sharedAttribute, setThreeEntity), Times.Once());
             to.Verify(d => d.SetReference(setThreeReferrerC, sharedAttribute, setThreeEntity), Times.Once());
@@ -410,6 +418,7 @@ namespace Maryland.Unit.Databases
             Assert.IsFalse(database.GetReferrers(sharedAttribute, doubleSetReferenceEntityValue).Any());
             Assert.IsFalse(database.GetReferrers(setReferenceAttribute, setReferenceAttributeValue).Any());
             Assert.IsFalse(database.GetReferrers(doubleSetReferenceAttribute, doubleSetReferenceAttributeValue).Any());
+            Assert.IsFalse(database.GetReferrers(duplicateSetReferenceAttribute, duplicateSetReferenceValue).Any());
             Assert.IsFalse(database.GetReferrers(sharedAttribute, Guid.NewGuid()).Any());
             Assert.IsFalse(database.GetReferrers(Guid.NewGuid(), setReferenceEntityValue).Any());
             Assert.IsFalse(database.GetReferrers(Guid.NewGuid(), doubleSetReferenceEntityValue).Any());
