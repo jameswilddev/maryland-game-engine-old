@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{ matrix.dotnet }}
+      - run: rm -r src/dotnet/Maryland.Editor
+        if: ${{ (matrix.operating-system == 'ubuntu-22.04') || (matrix.operating-system == 'ubuntu-20.04') || (matrix.operating-system == 'ubuntu-18.04') }}
       - run: dotnet test -p:CollectCoverage=true -p:Threshold=100 -p:ThresholdType=branch
         working-directory: src/dotnet
 
