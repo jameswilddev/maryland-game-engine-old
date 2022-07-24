@@ -77,5 +77,25 @@ namespace Maryland.DataTypes
 
             return output;
         }
+
+        /// <summary>
+        /// A sequence of <see cref="byte"/>s which describe <see langword="this"/> <see cref="Image"/>.
+        /// </summary>
+        public IEnumerable<byte> Serialized
+        {
+            get
+            {
+                yield return Columns;
+                yield return Rows;
+                
+                foreach (var pixel in Pixels)
+                {
+                    foreach (var b in pixel.Serialized)
+                    {
+                        yield return b;
+                    }
+                }
+            }
+        }
     }
 }

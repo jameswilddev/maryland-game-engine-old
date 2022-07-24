@@ -11,13 +11,32 @@ namespace Maryland.Unit.DataTypes
         public void ExposesGivenData()
         {
             byte columns = 3;
-            var pixels = ImmutableArray.Create(Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity(), Generate.ColorWithOpacity());
+            var pixels = ImmutableArray.Create
+            (
+                new ColorWithOpacity(0xf0, 0xa6, 0x10, 0xae),
+                new ColorWithOpacity(0x0b, 0x70, 0xd9, 0x08),
+                new ColorWithOpacity(0x72, 0xe3, 0x78, 0xed),
+                new ColorWithOpacity(0x47, 0xea, 0x60, 0x55), 
+                new ColorWithOpacity(0x0e, 0x65, 0xde, 0x6a),
+                new ColorWithOpacity(0xe9, 0xe9, 0x6c, 0x0d)
+            );
 
             var image = new Image(columns, pixels);
 
             Assert.AreEqual(columns, image.Columns);
             Assert.AreEqual(2, image.Rows);
             CollectionAssert.AreEqual(pixels, image.Pixels);
+            CollectionAssert.AreEqual
+            (
+                new byte[] 
+                { 
+                    columns, 
+                    2, 
+                    0xf0, 0xa6, 0x10, 0xae, 0x0b, 0x70, 0xd9, 0x08, 0x72, 0xe3, 0x78, 0xed,
+                    0x47, 0xea, 0x60, 0x55, 0x0e, 0x65, 0xde, 0x6a, 0xe9, 0xe9, 0x6c, 0x0d
+                },
+                image.Serialized.ToArray()
+            );
         }
 
         [TestMethod]
