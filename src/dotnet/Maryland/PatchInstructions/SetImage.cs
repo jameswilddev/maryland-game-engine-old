@@ -47,9 +47,7 @@ namespace Maryland.PatchInstructions
             .Byte(7)
             .Concat(Serialize.Guid(Entity))
             .Concat(Serialize.Guid(Attribute))
-            .Concat(Serialize.Byte(Value.Columns))
-            .Concat(Serialize.Byte(Value.Rows))
-            .Concat(Value.Pixels.SelectMany(pixel => new[] { pixel.Red, pixel.Green, pixel.Blue, pixel.Opacity }));
+            .Concat(Value.Serialized);
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
