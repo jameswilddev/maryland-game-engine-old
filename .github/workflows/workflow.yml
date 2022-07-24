@@ -33,31 +33,19 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: xdebug
 
-      # Dependency patches for PHP5.6.
+      # Dependency patches.
       - run: rm composer.lock
-        if: ${{ matrix.php == '5.6' }}
+        if: ${{ matrix.php != '8.1' }}
       - run: composer remove --dev vimeo/psalm phpunit/phpunit
         if: ${{ matrix.php == '5.6' }}
       - run: composer require --dev phpunit/phpunit:^5.0.0
         if: ${{ matrix.php == '5.6' }}
-
-      # Dependency patches for PHP7.0.
-      - run: rm composer.lock
-        if: ${{ matrix.php == '7.0' }}
       - run: composer remove --dev vimeo/psalm phpunit/phpunit
         if: ${{ matrix.php == '7.0' }}
       - run: composer require --dev phpunit/phpunit:^6.5.0
         if: ${{ matrix.php == '7.0' }}
-
-      # Dependency patches for PHP7.1.
-      - run: rm composer.lock
-        if: ${{ matrix.php == '7.1' }}
       - run: composer require --dev phpunit/phpunit:^7.5.0
         if: ${{ matrix.php == '7.1' }}
-
-      # Dependency patches for PHP7.2.
-      - run: rm composer.lock
-        if: ${{ matrix.php == '7.2' }}
       - run: composer require --dev phpunit/phpunit:^8.5.0
         if: ${{ matrix.php == '7.2' }}
 
