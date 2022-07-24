@@ -25,18 +25,20 @@ final class ColorWithOpacityTest extends TestCase
     $this->assertEquals("\x3f\x03\xa1\x48", $colorWithOpacity->getSerialized());
   }
 
+  /**
+   * @doesNotPerformAssertions
+   */
   public function test_allows_minimum()
   {
     new ColorWithOpacity(0, 0, 0, 0);
-
-    $this->expectNotToPerformAssertions();
   }
 
+  /**
+   * @doesNotPerformAssertions
+   */
   public function test_allows_maximum()
   {
     new ColorWithOpacity(255, 255, 255, 255);
-
-    $this->expectNotToPerformAssertions();
   }
 
   public function test_throws_exception_when_red_non_integer()
