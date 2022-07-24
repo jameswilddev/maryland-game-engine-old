@@ -28,6 +28,18 @@ namespace Maryland
             return new Guid(new byte[] { d, c, b, a, f, e, h, g, i, j, k, l, m, n, o, p });
         }
 
+        internal static async ValueTask<byte[]> MutableBytes(IAsyncEnumerator<byte> bytes, int number, string onEof)
+        {
+            var output = new byte[number];
+
+            for (var i = 0; i < number; i++)
+            {
+                output[i] = await Byte(bytes, onEof);
+            }
+
+            return output;
+        }
+
         internal static async ValueTask<ImmutableArray<byte>> Bytes(IAsyncEnumerator<byte> bytes, int number, string onEof)
         {
             var output = new byte[number];
@@ -167,6 +179,16 @@ namespace Maryland
             }
 
             return output.ToImmutableArray();
+        }
+
+        internal static async ValueTask<Color> Color(IAsyncEnumerator<byte> bytes, string onEof)
+        {
+            return new Color
+            (
+                await Byte(bytes, onEof),
+                await Byte(bytes, onEof),
+                await Byte(bytes, onEof)
+            );
         }
     }
 }
